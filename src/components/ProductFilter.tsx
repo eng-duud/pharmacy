@@ -11,6 +11,32 @@ interface FilterProps {
   setSelectedBrand: (brand: string) => void;
 }
 
+// ── Icon mapping for each category ───────────────────────────────────────────
+const CATEGORY_META: Record<string, { emoji: string; bg: string; darkBg: string }> = {
+  "أجهزة قياس الضغط":             { emoji: "🩺", bg: "bg-red-50",     darkBg: "dark:bg-red-900/20"     },
+  "أجهزة قياس السكر":             { emoji: "🩸", bg: "bg-rose-50",    darkBg: "dark:bg-rose-900/20"    },
+  "علاجات السكري":                 { emoji: "💊", bg: "bg-blue-50",    darkBg: "dark:bg-blue-900/20"    },
+  "مستلزمات الشعر":               { emoji: "💆‍♀️", bg: "bg-purple-50",  darkBg: "dark:bg-purple-900/20"  },
+  "الأحزمة الطبية":               { emoji: "🏥", bg: "bg-teal-50",    darkBg: "dark:bg-teal-900/20"    },
+  "كبار السن":                    { emoji: "👴", bg: "bg-amber-50",   darkBg: "dark:bg-amber-900/20"   },
+  "الأطفال":                      { emoji: "👶", bg: "bg-yellow-50",  darkBg: "dark:bg-yellow-900/20"  },
+  "الفيتامينات":                   { emoji: "🌿", bg: "bg-green-50",   darkBg: "dark:bg-green-900/20"   },
+  "العناية بالبشرة":               { emoji: "🧴", bg: "bg-pink-50",    darkBg: "dark:bg-pink-900/20"    },
+  "العناية بالحوامل":              { emoji: "🤰", bg: "bg-orange-50",  darkBg: "dark:bg-orange-900/20"  },
+  "أجهزة التدليك":                 { emoji: "💆", bg: "bg-violet-50",  darkBg: "dark:bg-violet-900/20"  },
+  "إرسال وصفة طبية واستشارات":    { emoji: "📋", bg: "bg-sky-50",     darkBg: "dark:bg-sky-900/20"     },
+  "علاجات الضغط":                  { emoji: "❤️‍🩹", bg: "bg-red-50",   darkBg: "dark:bg-red-900/20"     },
+  "علاجات التنفس":                 { emoji: "💨", bg: "bg-cyan-50",    darkBg: "dark:bg-cyan-900/20"    },
+  "العناية":                       { emoji: "🧼", bg: "bg-indigo-50",  darkBg: "dark:bg-indigo-900/20"  },
+  "علاجات القلب":                  { emoji: "❤️", bg: "bg-red-50",    darkBg: "dark:bg-red-900/20"     },
+  "الفوارات":                      { emoji: "⚗️", bg: "bg-lime-50",    darkBg: "dark:bg-lime-900/20"    },
+  "المراهم":                       { emoji: "🏺", bg: "bg-orange-50",  darkBg: "dark:bg-orange-900/20"  },
+  "العناية بالأسنان":              { emoji: "🦷", bg: "bg-slate-50",   darkBg: "dark:bg-slate-800"      },
+  "أصناف شركة NOW":                { emoji: "⭐", bg: "bg-yellow-50",  darkBg: "dark:bg-yellow-900/20"  },
+};
+
+const DEFAULT_META = { emoji: "💊", bg: "bg-slate-50", darkBg: "dark:bg-slate-800" };
+
 export default function ProductFilter({
   selectedCategory,
   setSelectedCategory,
@@ -23,6 +49,7 @@ export default function ProductFilter({
     (selectedCategory !== "الكل" ? 1 : 0) +
     (selectedBrand !== "الكل" ? 1 : 0);
 
+  // ── Desktop sidebar list ──────────────────────────────────────────────────
   const FilterContent = () => (
     <div className="space-y-8">
       {/* Categories */}
@@ -34,34 +61,44 @@ export default function ProductFilter({
         <div className="space-y-1.5 max-h-[400px] overflow-y-auto pr-1">
           <button
             onClick={() => setSelectedCategory("الكل")}
-            className={`w-full text-right px-4 py-3 rounded-xl transition-all text-sm font-medium ${
+            className={`w-full text-right px-4 py-3 rounded-xl transition-all text-sm font-medium flex items-center gap-3 ${
               selectedCategory === "الكل"
                 ? "bg-primary text-white shadow-md font-bold"
                 : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
             }`}
           >
+            <span className="text-xl">🔖</span>
             جميع الأصناف
           </button>
-          {CATEGORIES.map((category) => (
-            <button
-              key={category}
-              onClick={() => setSelectedCategory(category)}
-              className={`w-full text-right px-4 py-3 rounded-xl transition-all flex items-center justify-between group text-sm ${
-                selectedCategory === category
-                  ? "bg-primary text-white shadow-md font-bold"
-                  : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
-              }`}
-            >
-              <span>{category}</span>
-              <ChevronLeft
-                className={`w-4 h-4 transition-transform shrink-0 ${
-                  selectedCategory === category
-                    ? "rotate-180"
-                    : "group-hover:-translate-x-1"
+          {CATEGORIES.map((category) => {
+            const meta = CATEGORY_META[category] ?? DEFAULT_META;
+            const isActive = selectedCategory === category;
+            return (
+              <button
+                key={category}
+                onClick={() => setSelectedCategory(category)}
+                className={`w-full text-right px-4 py-3 rounded-xl transition-all flex items-center gap-3 group text-sm ${
+                  isActive
+                    ? "bg-primary text-white shadow-md font-bold"
+                    : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
                 }`}
-              />
-            </button>
-          ))}
+              >
+                <span
+                  className={`w-8 h-8 rounded-full flex items-center justify-center text-base shrink-0 ${
+                    isActive ? "bg-white/20" : `${meta.bg} ${meta.darkBg}`
+                  }`}
+                >
+                  {meta.emoji}
+                </span>
+                <span className="flex-1 text-right">{category}</span>
+                <ChevronLeft
+                  className={`w-4 h-4 shrink-0 transition-transform ${
+                    isActive ? "rotate-180" : "group-hover:-translate-x-1"
+                  }`}
+                />
+              </button>
+            );
+          })}
         </div>
       </div>
 
@@ -107,10 +144,10 @@ export default function ProductFilter({
         <FilterContent />
       </aside>
 
-      {/* ── Mobile: Inline filter bar ── */}
+      {/* ── Mobile: filter bar ── */}
       <div className="lg:hidden w-full space-y-3">
 
-        {/* Row 1: Filter button + "الكل" pill */}
+        {/* Row 1: Filter button + "الكل" */}
         <div className="flex items-center gap-3">
           <button
             onClick={() => setIsOpen(true)}
@@ -127,31 +164,50 @@ export default function ProductFilter({
 
           <button
             onClick={() => { setSelectedCategory("الكل"); setSelectedBrand("الكل"); }}
-            className={`shrink-0 px-4 py-2.5 rounded-2xl text-sm font-bold transition-all border ${
+            className={`flex items-center gap-2 shrink-0 px-4 py-2.5 rounded-2xl text-sm font-bold transition-all border ${
               selectedCategory === "الكل" && selectedBrand === "الكل"
                 ? "bg-primary text-white border-primary shadow-md shadow-primary/20"
                 : "bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-700"
             }`}
           >
-            الكل
+            🔖 الكل
           </button>
         </div>
 
-        {/* Row 2: Category pills (horizontal scroll) */}
-        <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-none">
-          {CATEGORIES.map((category) => (
-            <button
-              key={category}
-              onClick={() => setSelectedCategory(category)}
-              className={`shrink-0 px-3 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap border ${
-                selectedCategory === category
-                  ? "bg-primary text-white border-primary shadow-md"
-                  : "bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-700"
-              }`}
-            >
-              {category}
-            </button>
-          ))}
+        {/* Row 2: Category circles (horizontal scroll) */}
+        <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-none">
+          {CATEGORIES.map((category) => {
+            const meta = CATEGORY_META[category] ?? DEFAULT_META;
+            const isActive = selectedCategory === category;
+            return (
+              <button
+                key={category}
+                onClick={() => setSelectedCategory(category)}
+                className="flex flex-col items-center gap-1.5 shrink-0 group"
+              >
+                {/* Circle image */}
+                <div
+                  className={`w-14 h-14 rounded-full flex items-center justify-center text-2xl transition-all duration-200 border-2 ${
+                    isActive
+                      ? "border-primary bg-primary/10 dark:bg-primary/20 scale-105 shadow-lg shadow-primary/20"
+                      : `border-transparent ${meta.bg} ${meta.darkBg} group-active:scale-95`
+                  }`}
+                >
+                  {meta.emoji}
+                </div>
+                {/* Label */}
+                <span
+                  className={`text-[10px] font-bold text-center leading-tight max-w-[60px] transition-colors ${
+                    isActive
+                      ? "text-primary dark:text-teal-light"
+                      : "text-slate-500 dark:text-slate-400"
+                  }`}
+                >
+                  {category}
+                </span>
+              </button>
+            );
+          })}
         </div>
 
         {/* Active brand chip */}
@@ -165,7 +221,7 @@ export default function ProductFilter({
         )}
       </div>
 
-      {/* ── Mobile Full Filter Drawer ── */}
+      {/* ── Mobile Full Filter Drawer (bottom sheet) ── */}
       {isOpen && (
         <div className="fixed inset-0 z-50 lg:hidden">
           <div
@@ -200,10 +256,7 @@ export default function ProductFilter({
             {/* Action buttons */}
             <div className="px-6 py-4 border-t border-slate-100 dark:border-slate-800 flex gap-3">
               <button
-                onClick={() => {
-                  setSelectedCategory("الكل");
-                  setSelectedBrand("الكل");
-                }}
+                onClick={() => { setSelectedCategory("الكل"); setSelectedBrand("الكل"); }}
                 className="flex-1 border-2 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 py-3.5 rounded-2xl font-bold text-sm"
               >
                 إعادة ضبط

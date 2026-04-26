@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Truck, ShieldCheck, Clock } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Hero() {
   return (
@@ -78,10 +79,14 @@ export default function Hero() {
               {/* Note: In a real app, I'd use an image here. Using a placeholder-style div with premium look for now. */}
               <div className="aspect-[4/3] bg-slate-200 medical-gradient opacity-90 flex items-center justify-center">
                 <div className="text-white text-center p-8">
-                  <div className="w-24 h-24 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4 backdrop-blur-sm">
-                    <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center">
-                       <span className="text-primary text-4xl font-black">ق</span>
-                    </div>
+                  <div className="w-24 h-24 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4 backdrop-blur-sm p-2">
+                    <Image 
+                      src="/logo.jpg" 
+                      alt="صيدلية القدس" 
+                      width={80} 
+                      height={80} 
+                      className="w-full h-full rounded-full object-cover shadow-lg"
+                    />
                   </div>
                   <h3 className="text-2xl font-bold mb-2">ثقتكم هي أولويتنا</h3>
                   <p className="opacity-80">صيدلية القدس - رعاية طبية شاملة</p>

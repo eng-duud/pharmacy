@@ -200,13 +200,7 @@ export default function ContactPage() {
                 <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400">
                   <Clock className="w-4 h-4 text-primary" />
                   <span className="text-sm font-semibold">
-                    السبت – الخميس: 8ص – 10م
-                  </span>
-                </div>
-                <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400 mt-1">
-                  <Clock className="w-4 h-4 text-primary" />
-                  <span className="text-sm font-semibold">
-                    الجمعة: 10ص – 10م
+                    يومياً: 7:30 صباحاً – 1:00 بعد منتصف الليل
                   </span>
                 </div>
               </div>
@@ -226,7 +220,9 @@ export default function ContactPage() {
               </h3>
               <div className="flex gap-4">
                 <a
-                  href="#"
+                  href="https://www.facebook.com/share/1E1m9XYrMs/"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="flex items-center gap-2 bg-blue-600 text-white px-5 py-3 rounded-2xl font-bold text-sm hover:bg-blue-700 transition-all hover:-translate-y-0.5 shadow-lg shadow-blue-600/20"
                 >
                   <Facebook className="w-5 h-5" />
@@ -423,7 +419,7 @@ export default function ContactPage() {
               خريطة الموقع
             </p>
             <a
-              href="https://maps.google.com/?q=صنعاء+دار+سلم"
+              href="https://maps.app.goo.gl/69CLAtYuntC72XWz9?g_st=aw"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-primary text-white px-6 py-2.5 rounded-xl font-bold text-sm hover:bg-primary-dark transition-all"

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Sun, Moon } from "lucide-react";
 import { useState, useEffect } from "react";
 
@@ -35,9 +36,13 @@ export default function Header() {
 
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-9 h-9 medical-gradient rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg">
-            ق
-          </div>
+          <Image 
+            src="/logo.jpg" 
+            alt="صيدلية القدس" 
+            width={40} 
+            height={40} 
+            className="w-10 h-10 rounded-full object-cover shadow-lg border-2 border-white dark:border-slate-800"
+          />
           <span className="text-xl font-black text-primary dark:text-white tracking-tight">
             صيدلية <span className="text-teal dark:text-teal-light">القدس</span>
           </span>

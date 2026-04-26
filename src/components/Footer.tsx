@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Phone, MapPin, Instagram, Facebook, Twitter, Mail } from "lucide-react";
 
 export default function Footer() {
@@ -8,17 +9,21 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           {/* Brand Info */}
           <div className="space-y-6">
-            <Link href="/" className="flex items-center gap-2">
-              <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center text-white font-bold text-2xl">
-                ق
-              </div>
+            <Link href="/" className="flex items-center gap-3">
+              <Image 
+                src="/logo.jpg" 
+                alt="صيدلية القدس" 
+                width={48} 
+                height={48} 
+                className="w-12 h-12 rounded-full object-cover shadow-lg border-2 border-slate-700"
+              />
               <span className="text-2xl font-black tracking-tight">صيدلية <span className="text-teal-light">القدس</span></span>
             </Link>
             <p className="text-slate-400 leading-relaxed">
               صيدلية القدس.. شريككم في الصحة والعافية. نقدم خدماتنا في قلب صنعاء بأعلى معايير الجودة والاحترافية الطبية.
             </p>
             <div className="flex gap-4">
-              <a href="#" className="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+              <a href="https://www.facebook.com/share/1E1m9XYrMs/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
                 <Facebook className="w-5 h-5" />
               </a>
               <a href="#" className="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
