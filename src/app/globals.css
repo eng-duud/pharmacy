@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary-blue: #0056b3;
+  --medical-teal: #008080;
+}
+
+body {
+  @apply text-slate-800 antialiased;
+  direction: rtl;
+}
+
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-tajawal font-bold;
+  }
+  
+  p, span, div, a, button {
+    @apply font-tajawal;
+  }
+}
+
+.medical-gradient {
+  background: linear-gradient(135deg, #0056b3 0%, #008080 100%);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
