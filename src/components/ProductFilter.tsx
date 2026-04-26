@@ -1,7 +1,7 @@
 "use client";
 
 import { CATEGORIES, BRANDS } from "@/constants";
-import { ChevronLeft, Filter, X } from "lucide-react";
+import { ChevronLeft, Filter, X, SlidersHorizontal } from "lucide-react";
 import { useState } from "react";
 
 interface FilterProps {
@@ -15,9 +15,13 @@ export default function ProductFilter({
   selectedCategory,
   setSelectedCategory,
   selectedBrand,
-  setSelectedBrand
+  setSelectedBrand,
 }: FilterProps) {
   const [isOpen, setIsOpen] = useState(false);
+
+  const activeFiltersCount =
+    (selectedCategory !== "الكل" ? 1 : 0) +
+    (selectedBrand !== "الكل" ? 1 : 0);
 
   const FilterContent = () => (
     <div className="space-y-8">
@@ -27,12 +31,12 @@ export default function ProductFilter({
           <div className="w-1.5 h-6 bg-primary rounded-full" />
           الأقسام الطبية
         </h3>
-        <div className="space-y-2 max-h-[500px] overflow-y-auto pl-2 custom-scrollbar">
+        <div className="space-y-1.5 max-h-[400px] overflow-y-auto pr-1">
           <button
             onClick={() => setSelectedCategory("الكل")}
-            className={`w-full text-right px-4 py-2.5 rounded-xl transition-all ${
-              selectedCategory === "الكل" 
-                ? "bg-primary text-white shadow-md font-bold" 
+            className={`w-full text-right px-4 py-3 rounded-xl transition-all text-sm font-medium ${
+              selectedCategory === "الكل"
+                ? "bg-primary text-white shadow-md font-bold"
                 : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
             }`}
           >
@@ -42,14 +46,20 @@ export default function ProductFilter({
             <button
               key={category}
               onClick={() => setSelectedCategory(category)}
-              className={`w-full text-right px-4 py-2.5 rounded-xl transition-all flex items-center justify-between group ${
-                selectedCategory === category 
-                  ? "bg-primary text-white shadow-md font-bold" 
+              className={`w-full text-right px-4 py-3 rounded-xl transition-all flex items-center justify-between group text-sm ${
+                selectedCategory === category
+                  ? "bg-primary text-white shadow-md font-bold"
                   : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
               }`}
             >
               <span>{category}</span>
-              <ChevronLeft className={`w-4 h-4 transition-transform ${selectedCategory === category ? "rotate-180" : "group-hover:-translate-x-1"}`} />
+              <ChevronLeft
+                className={`w-4 h-4 transition-transform shrink-0 ${
+                  selectedCategory === category
+                    ? "rotate-180"
+                    : "group-hover:-translate-x-1"
+                }`}
+              />
             </button>
           ))}
         </div>
@@ -61,12 +71,12 @@ export default function ProductFilter({
           <div className="w-1.5 h-6 bg-teal rounded-full" />
           الشركات والماركات
         </h3>
-        <div className="space-y-2">
+        <div className="space-y-1.5">
           <button
             onClick={() => setSelectedBrand("الكل")}
-            className={`w-full text-right px-4 py-2.5 rounded-xl transition-all ${
-              selectedBrand === "الكل" 
-                ? "bg-teal text-white shadow-md font-bold" 
+            className={`w-full text-right px-4 py-3 rounded-xl transition-all text-sm font-medium ${
+              selectedBrand === "الكل"
+                ? "bg-teal text-white shadow-md font-bold"
                 : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
             }`}
           >
@@ -76,9 +86,9 @@ export default function ProductFilter({
             <button
               key={brand}
               onClick={() => setSelectedBrand(brand)}
-              className={`w-full text-right px-4 py-2.5 rounded-xl transition-all ${
-                selectedBrand === brand 
-                  ? "bg-teal text-white shadow-md font-bold" 
+              className={`w-full text-right px-4 py-3 rounded-xl transition-all text-sm ${
+                selectedBrand === brand
+                  ? "bg-teal text-white shadow-md font-bold"
                   : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
               }`}
             >
@@ -92,39 +102,122 @@ export default function ProductFilter({
 
   return (
     <>
-      {/* Desktop Sidebar */}
+      {/* ── Desktop Sidebar ── */}
       <aside className="hidden lg:block w-72 bg-white dark:bg-slate-900 rounded-3xl p-6 shadow-sm border border-slate-100 dark:border-slate-800 h-fit sticky top-28 transition-colors duration-300">
         <FilterContent />
       </aside>
 
-      {/* Mobile Filter Button */}
-      <div className="lg:hidden fixed bottom-6 left-6 z-40">
-        <button
-          onClick={() => setIsOpen(true)}
-          className="bg-primary text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center"
-        >
-          <Filter className="w-6 h-6" />
-        </button>
+      {/* ── Mobile: Inline filter bar (categories as pills) ── */}
+      <div className="lg:hidden w-full">
+        {/* Filter trigger row */}
+        <div className="flex items-center gap-3 mb-4">
+          <button
+            onClick={() => setIsOpen(true)}
+            className="flex items-center gap-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 px-4 py-2.5 rounded-2xl font-bold text-sm shadow-sm relative shrink-0"
+          >
+            <SlidersHorizontal className="w-4 h-4" />
+            تصفية
+            {activeFiltersCount > 0 && (
+              <span className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-primary text-white text-[10px] font-black rounded-full flex items-center justify-center">
+                {activeFiltersCount}
+              </span>
+            )}
+          </button>
+
+          {/* Horizontal scrollable category pills */}
+          <div className="flex gap-2 overflow-x-auto pb-1 flex-1 scrollbar-none">
+            <button
+              onClick={() => setSelectedCategory("الكل")}
+              className={`shrink-0 px-3 py-2 rounded-xl text-xs font-bold transition-all ${
+                selectedCategory === "الكل"
+                  ? "bg-primary text-white shadow-md"
+                  : "bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700"
+              }`}
+            >
+              الكل
+            </button>
+            {CATEGORIES.map((category) => (
+              <button
+                key={category}
+                onClick={() => setSelectedCategory(category)}
+                className={`shrink-0 px-3 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
+                  selectedCategory === category
+                    ? "bg-primary text-white shadow-md"
+                    : "bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700"
+                }`}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Active brand filter chip */}
+        {selectedBrand !== "الكل" && (
+          <div className="flex gap-2 mb-3">
+            <span className="bg-teal/10 text-teal px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-2">
+              {selectedBrand}
+              <button
+                onClick={() => setSelectedBrand("الكل")}
+                className="hover:text-teal-dark"
+              >
+                ×
+              </button>
+            </span>
+          </div>
+        )}
       </div>
 
-      {/* Mobile Side Panel */}
+      {/* ── Mobile Full Filter Drawer ── */}
       {isOpen && (
         <div className="fixed inset-0 z-50 lg:hidden">
-          <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" onClick={() => setIsOpen(false)} />
-          <div className="absolute top-0 right-0 h-full w-4/5 max-w-sm bg-white dark:bg-slate-900 shadow-2xl p-6 overflow-y-auto animate-in slide-in-from-right duration-300">
-            <div className="flex items-center justify-between mb-8">
-              <h2 className="text-xl font-black text-primary dark:text-teal-light">تصفية المنتجات</h2>
-              <button onClick={() => setIsOpen(false)} className="p-2 bg-slate-100 dark:bg-slate-800 rounded-full">
+          <div
+            className="absolute inset-0 bg-slate-900/50 backdrop-blur-sm"
+            onClick={() => setIsOpen(false)}
+          />
+          <div className="absolute bottom-0 right-0 left-0 max-h-[85vh] bg-white dark:bg-slate-900 rounded-t-[2rem] shadow-2xl flex flex-col animate-in slide-in-from-bottom duration-300">
+            {/* Handle */}
+            <div className="flex justify-center pt-3 pb-2">
+              <div className="w-10 h-1 bg-slate-200 dark:bg-slate-700 rounded-full" />
+            </div>
+
+            {/* Header */}
+            <div className="flex items-center justify-between px-6 pb-4 border-b border-slate-100 dark:border-slate-800">
+              <h2 className="text-xl font-black text-slate-900 dark:text-white flex items-center gap-2">
+                <Filter className="w-5 h-5 text-primary" />
+                تصفية المنتجات
+              </h2>
+              <button
+                onClick={() => setIsOpen(false)}
+                className="p-2 bg-slate-100 dark:bg-slate-800 rounded-full"
+              >
                 <X className="w-5 h-5 text-slate-500 dark:text-slate-400" />
               </button>
             </div>
-            <FilterContent />
-            <button 
-              onClick={() => setIsOpen(false)}
-              className="w-full bg-primary text-white py-4 rounded-2xl font-bold mt-8 shadow-lg"
-            >
-              عرض النتائج
-            </button>
+
+            {/* Scrollable content */}
+            <div className="overflow-y-auto flex-1 px-6 py-5">
+              <FilterContent />
+            </div>
+
+            {/* Action buttons */}
+            <div className="px-6 py-4 border-t border-slate-100 dark:border-slate-800 flex gap-3">
+              <button
+                onClick={() => {
+                  setSelectedCategory("الكل");
+                  setSelectedBrand("الكل");
+                }}
+                className="flex-1 border-2 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 py-3.5 rounded-2xl font-bold text-sm"
+              >
+                إعادة ضبط
+              </button>
+              <button
+                onClick={() => setIsOpen(false)}
+                className="flex-[2] bg-primary text-white py-3.5 rounded-2xl font-bold shadow-lg shadow-primary/20"
+              >
+                عرض النتائج
+              </button>
+            </div>
           </div>
         </div>
       )}
