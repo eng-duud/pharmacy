@@ -78,7 +78,7 @@ export default function Home() {
       </section>
 
       {/* ── CTA Banner ── */}
-      <section className="bg-primary py-14 md:py-16 mb-20">
+      <section className="bg-primary py-14 md:py-16">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-2xl md:text-4xl font-black text-white mb-4 md:mb-6">
             هل تبحث عن علاج محدد؟

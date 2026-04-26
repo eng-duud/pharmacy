@@ -435,7 +435,7 @@ export default function ContactPage() {
       </section>
 
       {/* ── CTA ── */}
-      <section className="bg-primary py-16 mb-20">
+      <section className="bg-primary py-16">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-black text-white mb-4">
             هل تحتاج إلى وصفة طبية؟

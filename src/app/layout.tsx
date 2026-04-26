@@ -3,6 +3,7 @@ import { Tajawal } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import BottomNav from "@/components/BottomNav";
 
 const tajawal = Tajawal({
   subsets: ["arabic"],
@@ -44,8 +45,12 @@ export default function RootLayout({
       </head>
       <body className={`${tajawal.variable} font-tajawal bg-white dark:bg-slate-950 transition-colors duration-300`}>
         <Header />
-        {children}
-        <Footer />
+        {/* pb-24 leaves room for the fixed bottom nav */}
+        <div className="pb-24">
+          {children}
+          <Footer />
+        </div>
+        <BottomNav />
       </body>
     </html>
   );
