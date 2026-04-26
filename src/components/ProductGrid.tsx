@@ -80,23 +80,15 @@ export default function ProductGrid({ products }: GridProps) {
               {product.name}
             </h3>
 
-            {/* Price + Button */}
-            <div className="flex items-center justify-between mt-auto pt-2 gap-1">
-              <span className="text-sm md:text-xl font-black text-primary dark:text-teal-light leading-none">
-                {product.price.toLocaleString()}
-                <span className="text-[9px] md:text-xs font-bold block md:inline"> ريال</span>
-              </span>
-
-              {/* Desktop: text button */}
-              <button className="hidden md:block bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white px-4 py-2 rounded-xl text-sm font-bold hover:bg-primary dark:hover:bg-teal hover:text-white transition-colors shrink-0">
-                أضف للسلة
-              </button>
-
-              {/* Mobile: icon button */}
-              <button className="md:hidden w-8 h-8 bg-primary text-white rounded-xl flex items-center justify-center shadow-md shadow-primary/20 active:scale-95 transition-transform shrink-0">
-                <ShoppingCart className="w-4 h-4" />
-              </button>
-            </div>
+            {/* CTA Button */}
+            <a
+              href="https://wa.me/967770709062"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-auto pt-2 w-full bg-primary/10 dark:bg-primary/20 text-primary dark:text-teal-light text-center py-2 rounded-xl text-xs md:text-sm font-bold hover:bg-primary hover:text-white dark:hover:bg-teal dark:hover:text-white transition-all active:scale-95 block"
+            >
+              اطلب الآن
+            </a>
           </div>
         </motion.div>
       ))}

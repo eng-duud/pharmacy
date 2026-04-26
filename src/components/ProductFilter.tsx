@@ -107,10 +107,11 @@ export default function ProductFilter({
         <FilterContent />
       </aside>
 
-      {/* ── Mobile: Inline filter bar (categories as pills) ── */}
-      <div className="lg:hidden w-full">
-        {/* Filter trigger row */}
-        <div className="flex items-center gap-3 mb-4">
+      {/* ── Mobile: Inline filter bar ── */}
+      <div className="lg:hidden w-full space-y-3">
+
+        {/* Row 1: Filter button + "الكل" pill */}
+        <div className="flex items-center gap-3">
           <button
             onClick={() => setIsOpen(true)}
             className="flex items-center gap-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 px-4 py-2.5 rounded-2xl font-bold text-sm shadow-sm relative shrink-0"
@@ -124,45 +125,41 @@ export default function ProductFilter({
             )}
           </button>
 
-          {/* Horizontal scrollable category pills */}
-          <div className="flex gap-2 overflow-x-auto pb-1 flex-1 scrollbar-none">
-            <button
-              onClick={() => setSelectedCategory("الكل")}
-              className={`shrink-0 px-3 py-2 rounded-xl text-xs font-bold transition-all ${
-                selectedCategory === "الكل"
-                  ? "bg-primary text-white shadow-md"
-                  : "bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700"
-              }`}
-            >
-              الكل
-            </button>
-            {CATEGORIES.map((category) => (
-              <button
-                key={category}
-                onClick={() => setSelectedCategory(category)}
-                className={`shrink-0 px-3 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
-                  selectedCategory === category
-                    ? "bg-primary text-white shadow-md"
-                    : "bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700"
-                }`}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
+          <button
+            onClick={() => { setSelectedCategory("الكل"); setSelectedBrand("الكل"); }}
+            className={`shrink-0 px-4 py-2.5 rounded-2xl text-sm font-bold transition-all border ${
+              selectedCategory === "الكل" && selectedBrand === "الكل"
+                ? "bg-primary text-white border-primary shadow-md shadow-primary/20"
+                : "bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-700"
+            }`}
+          >
+            الكل
+          </button>
         </div>
 
-        {/* Active brand filter chip */}
+        {/* Row 2: Category pills (horizontal scroll) */}
+        <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-none">
+          {CATEGORIES.map((category) => (
+            <button
+              key={category}
+              onClick={() => setSelectedCategory(category)}
+              className={`shrink-0 px-3 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap border ${
+                selectedCategory === category
+                  ? "bg-primary text-white border-primary shadow-md"
+                  : "bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-700"
+              }`}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
+
+        {/* Active brand chip */}
         {selectedBrand !== "الكل" && (
-          <div className="flex gap-2 mb-3">
+          <div className="flex gap-2">
             <span className="bg-teal/10 text-teal px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-2">
               {selectedBrand}
-              <button
-                onClick={() => setSelectedBrand("الكل")}
-                className="hover:text-teal-dark"
-              >
-                ×
-              </button>
+              <button onClick={() => setSelectedBrand("الكل")}>×</button>
             </span>
           </div>
         )}
