@@ -23,12 +23,9 @@ export async function createOrder(data: {
         customerPhone: data.customerPhone,
         customerAddress: data.customerAddress,
         totalAmount: data.totalAmount,
+        type: "CART",
         items: {
           create: data.items.map(item => ({
-            // We ignore foreign key constraints if products are just mock data for now,
-            // Wait, Prisma will enforce foreign key. 
-            // We will conditionally skip if productId is mock, but it's better to just pass it.
-            // If it fails because of mock product, we handle it gracefully.
             productId: item.productId,
             quantity: item.quantity,
             price: item.price
@@ -46,3 +43,38 @@ export async function createOrder(data: {
     return { success: false, error: "فشل في حفظ الطلب" };
   }
 }
+
+export async function createPrescriptionOrder(formData: FormData) {
+  try {
+    const name = formData.get("name") as string;
+    const phone = formData.get("phone") as string;
+    const notes = formData.get("notes") as string;
+    const imageFile = formData.get("image") as File;
+
+    let imageUrl = null;
+    if (imageFile && imageFile.size > 0) {
+      const { uploadImage } = await import("@/lib/upload");
+      imageUrl = await uploadImage(imageFile);
+    }
+
+    const order = await prisma.order.create({
+      data: {
+        customerName: name,
+        customerPhone: phone,
+        customerAddress: notes, // Store notes in address field for simplicity or use it for specific info
+        type: "PRESCRIPTION",
+        image: imageUrl,
+        totalAmount: 0,
+      }
+    });
+
+    revalidatePath("/admin/orders");
+    revalidatePath("/admin");
+
+    return { success: true, orderId: order.id, imageUrl };
+  } catch (error) {
+    console.error("Failed to create prescription:", error);
+    return { success: false, error: "فشل في إرسال الوصفة" };
+  }
+}
+

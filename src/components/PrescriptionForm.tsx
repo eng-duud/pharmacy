@@ -4,17 +4,47 @@ import { useState } from "react";
 import { Upload, Send, Phone, User, FileText, CheckCircle2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
+import { createPrescriptionOrder } from "@/app/actions/order";
+
 export default function PrescriptionForm() {
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [fileName, setFileName] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitted(true);
-    }, 1000);
+    setIsSubmitting(true);
+
+    const formData = new FormData(e.currentTarget);
+    try {
+      const res = await createPrescriptionOrder(formData);
+      
+      if (res.success) {
+        // Construct WhatsApp Message
+        const name = formData.get("name");
+        const phone = formData.get("phone");
+        const notes = formData.get("notes");
+        
+        let message = `مرحباً صيدلية القدس، أود إرسال وصفة طبية جديدة:\n\n`;
+        message += `👤 الاسم: ${name}\n`;
+        message += `📞 الهاتف: ${phone}\n`;
+        if (notes) message += `📝 ملاحظات: ${notes}\n`;
+        if (res.imageUrl) message += `🖼️ صورة الوصفة مرفقة في الطلب رقم: ${res.orderId}\n`;
+        
+        const whatsappUrl = `https://wa.me/967770709062?text=${encodeURIComponent(message)}`;
+        window.open(whatsappUrl, '_blank');
+        
+        setIsSubmitted(true);
+      } else {
+        alert("فشل في إرسال الوصفة، يرجى المحاولة مرة أخرى.");
+      }
+    } catch (error) {
+      alert("حدث خطأ غير متوقع.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -50,6 +80,7 @@ export default function PrescriptionForm() {
                   الاسم الكامل
                 </label>
                 <input
+                  name="name"
                   required
                   type="text"
                   placeholder="أدخل اسمك هنا..."
@@ -64,6 +95,7 @@ export default function PrescriptionForm() {
                   رقم الهاتف (واتساب)
                 </label>
                 <input
+                  name="phone"
                   required
                   type="tel"
                   placeholder="مثال: 770709062"
@@ -86,7 +118,14 @@ export default function PrescriptionForm() {
                     </p>
                     <p className="text-xs text-slate-400">PNG, JPG, PDF (حد أقصى 5MB)</p>
                   </div>
-                  <input type="file" className="hidden" accept="image/*,.pdf" onChange={handleFileChange} required />
+                  <input 
+                    name="image"
+                    type="file" 
+                    className="hidden" 
+                    accept="image/*,.pdf" 
+                    onChange={handleFileChange} 
+                    required 
+                  />
                 </label>
               </div>
 
@@ -97,6 +136,7 @@ export default function PrescriptionForm() {
                   ملاحظات إضافية
                 </label>
                 <textarea
+                  name="notes"
                   placeholder="أي معلومات إضافية تود إخبارنا بها..."
                   rows={4}
                   className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl py-4 px-6 focus:ring-4 focus:ring-primary/10 focus:border-primary outline-none transition-all resize-none"
@@ -105,10 +145,15 @@ export default function PrescriptionForm() {
 
               <button
                 type="submit"
-                className="w-full bg-primary text-white py-5 rounded-[1.5rem] font-black text-xl shadow-xl shadow-primary/20 hover:bg-primary-dark transition-all transform hover:-translate-y-1 flex items-center justify-center gap-3"
+                disabled={isSubmitting}
+                className="w-full bg-primary text-white py-5 rounded-[1.5rem] font-black text-xl shadow-xl shadow-primary/20 hover:bg-primary-dark transition-all transform hover:-translate-y-1 flex items-center justify-center gap-3 disabled:opacity-70"
               >
-                إرسال الآن
-                <Send className="w-6 h-6 rotate-180" />
+                {isSubmitting ? "جاري الإرسال..." : (
+                  <>
+                    إرسال الآن
+                    <Send className="w-6 h-6 rotate-180" />
+                  </>
+                )}
               </button>
             </div>
           </motion.form>

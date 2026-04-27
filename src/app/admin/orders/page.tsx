@@ -26,11 +26,11 @@ export default async function AdminOrdersPage() {
           <table className="w-full text-right text-sm">
             <thead className="bg-slate-50 dark:bg-slate-800/50 text-slate-500 dark:text-slate-400">
               <tr>
-                <th className="p-4 font-medium">رقم الطلب</th>
+                <th className="p-4 font-medium">النوع</th>
                 <th className="p-4 font-medium">العميل</th>
                 <th className="p-4 font-medium">الهاتف</th>
-                <th className="p-4 font-medium">العنوان</th>
-                <th className="p-4 font-medium">المنتجات</th>
+                <th className="p-4 font-medium">العنوان/الملاحظات</th>
+                <th className="p-4 font-medium">التفاصيل</th>
                 <th className="p-4 font-medium">الإجمالي</th>
                 <th className="p-4 font-medium">التاريخ</th>
                 <th className="p-4 font-medium">الحالة</th>
@@ -39,20 +39,34 @@ export default async function AdminOrdersPage() {
             <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
               {orders.map(order => (
                 <tr key={order.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-                  <td className="p-4 font-mono text-xs text-slate-500">{order.id.slice(-6).toUpperCase()}</td>
+                  <td className="p-4">
+                    <span className={`px-2 py-1 rounded text-[10px] font-bold ${
+                      order.type === 'PRESCRIPTION' ? 'bg-purple-100 text-purple-700' : 'bg-blue-100 text-blue-700'
+                    }`}>
+                      {order.type === 'PRESCRIPTION' ? 'وصفة طبية' : 'سلة شراء'}
+                    </span>
+                  </td>
                   <td className="p-4 font-bold dark:text-white">{order.customerName}</td>
                   <td className="p-4 text-slate-600 dark:text-slate-300" dir="ltr">{order.customerPhone}</td>
                   <td className="p-4 text-slate-600 dark:text-slate-300 max-w-[200px] truncate" title={order.customerAddress || ""}>
                     {order.customerAddress}
                   </td>
                   <td className="p-4">
-                    <ul className="list-disc list-inside text-xs text-slate-500 dark:text-slate-400">
-                      {order.items.map(item => (
-                        <li key={item.id}>
-                          {item.product ? item.product.name : "منتج مخصص"} (×{item.quantity})
-                        </li>
-                      ))}
-                    </ul>
+                    {order.type === 'PRESCRIPTION' ? (
+                      order.image ? (
+                        <a href={order.image} target="_blank" rel="noreferrer" className="text-primary underline text-xs font-bold">عرض صورة الوصفة</a>
+                      ) : (
+                        <span className="text-slate-400 text-xs italic">لا توجد صورة</span>
+                      )
+                    ) : (
+                      <ul className="list-disc list-inside text-xs text-slate-500 dark:text-slate-400">
+                        {order.items.map(item => (
+                          <li key={item.id}>
+                            {item.product ? item.product.name : "منتج مخصص"} (×{item.quantity})
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </td>
                   <td className="p-4 font-bold text-primary">{order.totalAmount} ريال</td>
                   <td className="p-4 text-slate-500">

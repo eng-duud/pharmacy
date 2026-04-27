@@ -4,6 +4,7 @@ import { Product } from "@/constants";
 import { ShoppingCart, Heart } from "lucide-react";
 import { motion } from "framer-motion";
 import { useCart } from "@/context/CartContext";
+import Image from "next/image";
 
 interface GridProps {
   products: Product[];
@@ -50,10 +51,21 @@ export default function ProductGrid({ products }: GridProps) {
 
           {/* Image Container */}
           <div className="aspect-square bg-slate-50 dark:bg-slate-800 rounded-xl md:rounded-2xl mb-3 md:mb-4 overflow-hidden relative transition-colors">
-            <div className="w-full h-full medical-gradient opacity-10 dark:opacity-20" />
-            <div className="absolute inset-0 flex items-center justify-center text-primary/20 dark:text-teal-light/10 font-black text-5xl md:text-6xl select-none">
-              ق
-            </div>
+            {product.image ? (
+              <Image 
+                src={product.image} 
+                alt={product.name} 
+                fill 
+                className="object-cover group-hover:scale-110 transition-transform duration-500" 
+              />
+            ) : (
+              <>
+                <div className="w-full h-full medical-gradient opacity-10 dark:opacity-20" />
+                <div className="absolute inset-0 flex items-center justify-center text-primary/20 dark:text-teal-light/10 font-black text-5xl md:text-6xl select-none">
+                  ق
+                </div>
+              </>
+            )}
 
             {/* Quick Add — desktop hover overlay only */}
             <div className="hidden md:flex absolute inset-0 bg-primary/20 dark:bg-teal/20 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity items-center justify-center gap-3">

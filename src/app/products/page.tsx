@@ -1,27 +1,35 @@
 import prisma from "@/lib/prisma";
 import ProductsClient from "@/components/ProductsClient";
-import { MOCK_PRODUCTS } from "@/constants";
 
 export const dynamic = "force-dynamic";
 
 export default async function ProductsPage() {
-  // Fetch real products from DB
-  const dbProductsRaw = await prisma.product.findMany({
-    include: { category: true }
-  });
+  // Fetch real products and categories from DB
+  const [dbProductsRaw, categories] = await Promise.all([
+    prisma.product.findMany({
+      include: { category: true },
+      orderBy: { createdAt: 'desc' }
+    }),
+    prisma.category.findMany({
+      orderBy: { name: 'asc' }
+    })
+  ]);
 
   // Map them to match the expected format
   const dbProducts = dbProductsRaw.map(p => ({
     id: p.id,
     name: p.name,
     category: p.category.name,
-    brand: "القدس", // Default for now
+    brand: "القدس", // Default for now, as brand is not in schema
     price: p.price,
     image: p.image || "/placeholder.png",
   }));
 
-  // Combine real DB products and MOCK products for presentation
-  const combinedProducts = [...dbProducts, ...MOCK_PRODUCTS];
-
-  return <ProductsClient initialProducts={combinedProducts} />;
+  return (
+    <ProductsClient 
+      initialProducts={dbProducts} 
+      categories={categories.map(c => c.name)} 
+    />
+  );
 }
+

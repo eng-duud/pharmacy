@@ -40,6 +40,21 @@ export default function CheckoutPage() {
     
     if (res.success) {
       setIsSuccess(true);
+      
+      // Construct WhatsApp Message
+      let message = `مرحباً صيدلية القدس، أود تأكيد طلبي الجديد:\n\n`;
+      message += `👤 الاسم: ${formData.name}\n`;
+      message += `📞 الهاتف: ${formData.phone}\n`;
+      message += `📍 العنوان: ${formData.address}\n\n`;
+      message += `🛍️ تفاصيل الطلب:\n`;
+      cartItems.forEach((item, index) => {
+        message += `${index + 1}. ${item.name} (الكمية: ${item.quantity})\n`;
+      });
+      message += `\n💰 الإجمالي النهائي: ${cartTotal} ريال\n`;
+      
+      const whatsappUrl = `https://wa.me/967770709062?text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, '_blank');
+      
       clearCart();
     } else {
       alert("حدث خطأ أثناء حفظ الطلب. قد تكون المنتجات المضافة تجريبية وليست في قاعدة البيانات الحقيقية.");

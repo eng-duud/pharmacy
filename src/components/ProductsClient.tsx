@@ -14,7 +14,13 @@ type ProductType = {
   image: string;
 };
 
-export default function ProductsClient({ initialProducts }: { initialProducts: ProductType[] }) {
+export default function ProductsClient({ 
+  initialProducts, 
+  categories 
+}: { 
+  initialProducts: ProductType[];
+  categories: string[];
+}) {
   const [selectedCategory, setSelectedCategory] = useState("الكل");
   const [selectedBrand, setSelectedBrand] = useState("الكل");
   const [searchQuery, setSearchQuery] = useState("");
@@ -36,7 +42,7 @@ export default function ProductsClient({ initialProducts }: { initialProducts: P
     <main className="min-h-screen flex flex-col pb-6">
       {/* ── Page Header ── */}
       <section className="bg-slate-50 dark:bg-slate-900/50 border-b border-slate-100 dark:border-slate-800 py-8 md:py-12 transition-colors duration-300">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 text-right" dir="rtl">
           <h1 className="text-2xl md:text-4xl font-black text-slate-900 dark:text-white mb-2 md:mb-4">
             منتجاتنا
           </h1>
@@ -49,10 +55,11 @@ export default function ProductsClient({ initialProducts }: { initialProducts: P
 
       {/* ── Main Content ── */}
       <section className="container mx-auto px-3 md:px-4 py-6 md:py-12 flex-grow">
-        <div className="flex flex-col lg:flex-row gap-4 md:gap-8">
+        <div className="flex flex-col lg:flex-row-reverse gap-4 md:gap-8">
 
           {/* Sidebar / Mobile Filter bar */}
           <ProductFilter
+            categories={categories}
             selectedCategory={selectedCategory}
             setSelectedCategory={setSelectedCategory}
             selectedBrand={selectedBrand}
@@ -71,7 +78,8 @@ export default function ProductsClient({ initialProducts }: { initialProducts: P
                   placeholder="ابحث في المنتجات..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl py-2.5 md:py-3 pr-10 pl-4 text-sm md:text-base shadow-sm focus:ring-2 focus:ring-primary/20 dark:focus:ring-teal/20 outline-none dark:text-white transition"
+                  className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl py-2.5 md:py-3 pr-10 pl-4 text-sm md:text-base shadow-sm focus:ring-2 focus:ring-primary/20 dark:focus:ring-teal/20 outline-none dark:text-white transition text-right"
+                  dir="rtl"
                 />
                 <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4 md:w-5 md:h-5" />
                 {searchQuery && (
@@ -92,7 +100,7 @@ export default function ProductsClient({ initialProducts }: { initialProducts: P
 
             {/* Active search filter chip */}
             {searchQuery && (
-              <div className="flex gap-2">
+              <div className="flex gap-2 justify-end">
                 <span className="bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-2">
                   بحث: {searchQuery}
                   <button
@@ -106,7 +114,6 @@ export default function ProductsClient({ initialProducts }: { initialProducts: P
             )}
 
             {/* Grid */}
-            {/* @ts-ignore */}
             <ProductGrid products={filteredProducts} />
           </div>
         </div>
@@ -114,3 +121,4 @@ export default function ProductsClient({ initialProducts }: { initialProducts: P
     </main>
   );
 }
+

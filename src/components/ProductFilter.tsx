@@ -1,10 +1,11 @@
 "use client";
 
-import { CATEGORIES, BRANDS } from "@/constants";
+import { BRANDS } from "@/constants";
 import { ChevronLeft, Filter, X, SlidersHorizontal } from "lucide-react";
 import { useState } from "react";
 
 interface FilterProps {
+  categories: string[];
   selectedCategory: string;
   setSelectedCategory: (cat: string) => void;
   selectedBrand: string;
@@ -38,6 +39,7 @@ const CATEGORY_META: Record<string, { emoji: string; bg: string; darkBg: string 
 const DEFAULT_META = { emoji: "💊", bg: "bg-slate-50", darkBg: "dark:bg-slate-800" };
 
 export default function ProductFilter({
+  categories,
   selectedCategory,
   setSelectedCategory,
   selectedBrand,
@@ -51,7 +53,7 @@ export default function ProductFilter({
 
   // ── Desktop sidebar list ──────────────────────────────────────────────────
   const FilterContent = () => (
-    <div className="space-y-8">
+    <div className="space-y-8 text-right" dir="rtl">
       {/* Categories */}
       <div>
         <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
@@ -70,7 +72,7 @@ export default function ProductFilter({
             <span className="text-xl">🔖</span>
             جميع الأصناف
           </button>
-          {CATEGORIES.map((category) => {
+          {categories.map((category) => {
             const meta = CATEGORY_META[category] ?? DEFAULT_META;
             const isActive = selectedCategory === category;
             return (
@@ -102,38 +104,40 @@ export default function ProductFilter({
         </div>
       </div>
 
-      {/* Brands */}
-      <div>
-        <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
-          <div className="w-1.5 h-6 bg-teal rounded-full" />
-          الشركات والماركات
-        </h3>
-        <div className="space-y-1.5">
-          <button
-            onClick={() => setSelectedBrand("الكل")}
-            className={`w-full text-right px-4 py-3 rounded-xl transition-all text-sm font-medium ${
-              selectedBrand === "الكل"
-                ? "bg-teal text-white shadow-md font-bold"
-                : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
-            }`}
-          >
-            جميع الشركات
-          </button>
-          {BRANDS.map((brand) => (
+      {/* Brands Filter (Only show if BRANDS has items) */}
+      {BRANDS.length > 0 && (
+        <div>
+          <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+            <div className="w-1.5 h-6 bg-teal rounded-full" />
+            الشركات والماركات
+          </h3>
+          <div className="space-y-1.5">
             <button
-              key={brand}
-              onClick={() => setSelectedBrand(brand)}
-              className={`w-full text-right px-4 py-3 rounded-xl transition-all text-sm ${
-                selectedBrand === brand
+              onClick={() => setSelectedBrand("الكل")}
+              className={`w-full text-right px-4 py-3 rounded-xl transition-all text-sm font-medium ${
+                selectedBrand === "الكل"
                   ? "bg-teal text-white shadow-md font-bold"
                   : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
               }`}
             >
-              {brand}
+              جميع الشركات
             </button>
-          ))}
+            {BRANDS.map((brand) => (
+              <button
+                key={brand}
+                onClick={() => setSelectedBrand(brand)}
+                className={`w-full text-right px-4 py-3 rounded-xl transition-all text-sm ${
+                  selectedBrand === brand
+                    ? "bg-teal text-white shadow-md font-bold"
+                    : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
+                }`}
+              >
+                {brand}
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 
@@ -145,7 +149,7 @@ export default function ProductFilter({
       </aside>
 
       {/* ── Mobile: filter bar ── */}
-      <div className="lg:hidden w-full space-y-3">
+      <div className="lg:hidden w-full space-y-3" dir="rtl">
 
         {/* Row 1: Filter button + "الكل" */}
         <div className="flex items-center gap-3">
@@ -176,7 +180,7 @@ export default function ProductFilter({
 
         {/* Row 2: Category circles (horizontal scroll) */}
         <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-none">
-          {CATEGORIES.map((category) => {
+          {categories.map((category) => {
             const meta = CATEGORY_META[category] ?? DEFAULT_META;
             const isActive = selectedCategory === category;
             return (
@@ -193,7 +197,7 @@ export default function ProductFilter({
                       : `border-transparent ${meta.bg} ${meta.darkBg} group-active:scale-95`
                   }`}
                 >
-                  {meta.emoji}
+                  {prefixEmoji(category, meta.emoji)}
                 </div>
                 {/* Label */}
                 <span
@@ -235,7 +239,7 @@ export default function ProductFilter({
             </div>
 
             {/* Header */}
-            <div className="flex items-center justify-between px-6 pb-4 border-b border-slate-100 dark:border-slate-800">
+            <div className="flex items-center justify-between px-6 pb-4 border-b border-slate-100 dark:border-slate-800" dir="rtl">
               <h2 className="text-xl font-black text-slate-900 dark:text-white flex items-center gap-2">
                 <Filter className="w-5 h-5 text-primary" />
                 تصفية المنتجات
@@ -254,7 +258,7 @@ export default function ProductFilter({
             </div>
 
             {/* Action buttons */}
-            <div className="px-6 py-4 border-t border-slate-100 dark:border-slate-800 flex gap-3">
+            <div className="px-6 py-4 border-t border-slate-100 dark:border-slate-800 flex gap-3" dir="rtl">
               <button
                 onClick={() => { setSelectedCategory("الكل"); setSelectedBrand("الكل"); }}
                 className="flex-1 border-2 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 py-3.5 rounded-2xl font-bold text-sm"
@@ -274,3 +278,8 @@ export default function ProductFilter({
     </>
   );
 }
+
+function prefixEmoji(category: string, defaultEmoji: string) {
+  return defaultEmoji;
+}
+
