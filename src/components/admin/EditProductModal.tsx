@@ -80,16 +80,7 @@ export default function EditProductModal({
                   className="w-full p-3 bg-slate-50 dark:bg-slate-800 border-none rounded-2xl focus:ring-2 focus:ring-primary dark:text-white" 
                 />
               </div>
-              <div>
-                <label className="block text-sm font-bold mb-2 dark:text-slate-300">السعر (ريال)</label>
-                <input 
-                  type="number" 
-                  name="price" 
-                  required 
-                  defaultValue={product.price}
-                  className="w-full p-3 bg-slate-50 dark:bg-slate-800 border-none rounded-2xl focus:ring-2 focus:ring-primary dark:text-white" 
-                />
-              </div>
+                <input type="hidden" name="price" value="0" />
               <div>
                 <label className="block text-sm font-bold mb-2 dark:text-slate-300">القسم</label>
                 <select 

@@ -58,10 +58,7 @@ export default function AddProductForm({ categories }: { categories: Category[] 
             <label className="block text-sm font-bold mb-2 dark:text-slate-300">اسم المنتج</label>
             <input type="text" name="name" required placeholder="مثال: فيتامين سي" className="w-full p-3 bg-slate-50 dark:bg-slate-800 border-none rounded-2xl focus:ring-2 focus:ring-primary dark:text-white" />
           </div>
-          <div>
-            <label className="block text-sm font-bold mb-2 dark:text-slate-300">السعر (ريال)</label>
-            <input type="number" name="price" required placeholder="0.00" className="w-full p-3 bg-slate-50 dark:bg-slate-800 border-none rounded-2xl focus:ring-2 focus:ring-primary dark:text-white" />
-          </div>
+          <input type="hidden" name="price" value="0" />
           
           <div>
             <label className="block text-sm font-bold mb-2 dark:text-slate-300">القسم</label>

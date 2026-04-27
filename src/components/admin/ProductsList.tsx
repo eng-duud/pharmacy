@@ -39,7 +39,7 @@ export default function ProductsList({
               <tr>
                 <th className="p-5 font-bold text-sm">المنتج</th>
                 <th className="p-5 font-bold text-sm">التصنيف</th>
-                <th className="p-5 font-bold text-sm">السعر</th>
+
                 <th className="p-5 font-bold text-sm text-center">الإجراءات</th>
               </tr>
             </thead>
@@ -62,9 +62,7 @@ export default function ProductsList({
                       {product.category.name}
                     </span>
                   </td>
-                  <td className="p-5 font-black text-slate-800 dark:text-white">
-                    {product.price.toLocaleString()} <span className="text-[10px] text-slate-400 mr-1 font-normal">ريال</span>
-                  </td>
+
                   <td className="p-5">
                     <div className="flex items-center justify-center gap-2">
                       <button 

@@ -56,9 +56,7 @@ export default function CartSidebar() {
                     </button>
                   </div>
                   <div className="mt-auto flex items-center justify-between">
-                    <div className="font-bold text-teal dark:text-teal-400">
-                      {item.price} ريال
-                    </div>
+                    {/* Price - Removed as per user request */}
                     <div className="flex items-center gap-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg p-1">
                       <button 
                         onClick={() => updateQuantity(item.id, item.quantity - 1)}
@@ -83,17 +81,15 @@ export default function CartSidebar() {
 
         {cartItems.length > 0 && (
           <div className="p-4 border-t border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50">
-            <div className="flex justify-between items-center mb-4 text-lg font-bold">
-              <span className="text-slate-600 dark:text-slate-400">الإجمالي:</span>
-              <span className="text-primary dark:text-primary-light">{cartTotal} ريال</span>
-            </div>
-            <Link 
-              href="/checkout"
-              onClick={() => setIsCartOpen(false)}
-              className="w-full py-3 bg-primary hover:bg-primary-dark text-white rounded-xl font-bold flex items-center justify-center transition-colors"
+            <button 
+              onClick={() => {
+                const message = `أهلاً صيدلية القدس، أود طلب المنتجات التالية:\n${cartItems.map(item => `- ${item.name} (الكمية: ${item.quantity})`).join('\n')}`;
+                window.open(`https://wa.me/967770709062?text=${encodeURIComponent(message)}`, '_blank');
+              }}
+              className="w-full py-3 bg-primary hover:bg-primary-dark text-white rounded-xl font-bold flex items-center justify-center transition-colors gap-2"
             >
-              إتمام الطلب
-            </Link>
+              اطلب عبر واتساب
+            </button>
           </div>
         )}
       </div>

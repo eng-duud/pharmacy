@@ -13,7 +13,7 @@ export async function addProduct(formData: FormData) {
   const categoryId = formData.get("categoryId") as string;
   const newCategoryName = formData.get("newCategoryName") as string;
   
-  if (!name || !price || (!categoryId && !newCategoryName)) {
+  if (!name || isNaN(price) || (!categoryId && !newCategoryName)) {
     throw new Error("Missing required fields");
   }
 

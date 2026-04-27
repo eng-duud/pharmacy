@@ -101,10 +101,7 @@ export default function ProductGrid({ products }: GridProps) {
               {product.name}
             </h3>
 
-            {/* Price */}
-            <div className="font-bold text-teal dark:text-teal-400 text-sm md:text-base">
-              {product.price} ريال
-            </div>
+            {/* Price - Removed as per user request */}
 
             {/* CTA Button */}
             <button
