@@ -4,21 +4,14 @@ import { useState, useMemo } from "react";
 import ProductFilter from "@/components/ProductFilter";
 import ProductGrid from "@/components/ProductGrid";
 import { Search, X } from "lucide-react";
+import { Product } from "@/constants";
 
-type ProductType = {
-  id: string | number;
-  name: string;
-  category: string;
-  brand?: string;
-  price: number;
-  image: string;
-};
 
 export default function ProductsClient({ 
   initialProducts, 
   categories 
 }: { 
-  initialProducts: ProductType[];
+  initialProducts: Product[];
   categories: string[];
 }) {
   const [selectedCategory, setSelectedCategory] = useState("الكل");

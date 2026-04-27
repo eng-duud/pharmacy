@@ -11,6 +11,6 @@ export interface Product {
   brand?: string;
   price: number;
   image: string;
-  isAvailable: boolean;
+  isAvailable?: boolean;
 }
 
