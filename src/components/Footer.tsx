@@ -90,9 +90,14 @@ export default function Footer() {
               <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center text-primary shrink-0">
                 <MapPin className="w-5 h-5" />
               </div>
-              <p className="text-slate-400 font-medium leading-relaxed">
+              <a 
+                href="https://www.google.com/maps/search/?api=1&query=صيدلية+القدس+صنعاء+دار+سلم" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-slate-400 font-medium leading-relaxed hover:text-primary transition-colors"
+              >
                 صنعاء - دار سلم - نهاية الجسر باتجاه الحثيلي
-              </p>
+              </a>
             </div>
             <div className="mt-6 rounded-2xl overflow-hidden grayscale contrast-125 opacity-50 hover:opacity-100 transition-opacity h-32 bg-slate-800 flex items-center justify-center">
                <span className="text-xs text-slate-500 italic">خريطة الموقع قريباً...</span>
@@ -101,7 +106,8 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-slate-800 pt-10 text-center text-slate-500 text-sm">
-          <p>© {new Date().getFullYear()} صيدلية القدس. جميع الحقوق محفوظة. صنعاء، اليمن.</p>
+          <p>© {new Date().getFullYear()} صيدلية القدس. جميع الحقوق محفوظة.</p>
+          <p className="mt-2 text-slate-600">اليمن - صنعاء - دار سلم - نهاية الجسر باتجاه الحثيلي</p>
         </div>
       </div>
     </footer>
