@@ -37,8 +37,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
         {/* Top Header */}
-        <header className="h-20 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 flex items-center justify-between px-8 sticky top-0 z-20">
-          <div className="lg:hidden absolute left-1/2 -translate-x-1/2 font-black text-primary text-xs">
+        <header className="h-20 bg-red-600 lg:bg-white/80 dark:lg:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 flex items-center justify-between px-8 sticky top-0 z-20">
+          <div className="lg:hidden absolute left-1/2 -translate-x-1/2 font-black text-white text-sm bg-black px-2 py-1 rounded shadow-lg">
             نظام الجوال نشط ✓
           </div>
           <div className="flex items-center gap-4 flex-1">
