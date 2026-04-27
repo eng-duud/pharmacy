@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { ShoppingBag, ArrowRight, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { createOrder } from "@/app/actions/order";
 
 export default function CheckoutPage() {
   const { cartItems, cartTotal, clearCart } = useCart();
@@ -23,14 +24,26 @@ export default function CheckoutPage() {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // TODO: Send data to Server Action to save in database
+    const res = await createOrder({
+      customerName: formData.name,
+      customerPhone: formData.phone,
+      customerAddress: formData.address,
+      totalAmount: cartTotal,
+      items: cartItems.map(item => ({
+        productId: item.id,
+        quantity: item.quantity,
+        price: item.price
+      }))
+    });
     
-    // Simulation for now
-    setTimeout(() => {
-      setIsSubmitting(false);
+    setIsSubmitting(false);
+    
+    if (res.success) {
       setIsSuccess(true);
       clearCart();
-    }, 1500);
+    } else {
+      alert("حدث خطأ أثناء حفظ الطلب. قد تكون المنتجات المضافة تجريبية وليست في قاعدة البيانات الحقيقية.");
+    }
   };
 
   if (isSuccess) {
