@@ -68,18 +68,18 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         </header>
 
         {/* Page Content */}
-        <main className="flex-1 overflow-y-auto p-6 md:p-10 pb-24 lg:pb-10">
+        <main className="flex-1 overflow-y-auto p-4 md:p-10 pb-32 lg:pb-10">
           {children}
         </main>
-
-        {/* Mobile Bottom Navigation */}
-        <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white/90 dark:bg-slate-900/90 backdrop-blur-lg border-t border-slate-200 dark:border-slate-800 px-4 py-2 z-50 flex justify-around items-center shadow-[0_-4px_15px_rgba(0,0,0,0.05)]">
-          <MobileNavLink href="/admin" icon={<LayoutDashboard className="w-5 h-5" />} label="الرئيسية" />
-          <MobileNavLink href="/admin/products" icon={<Package className="w-5 h-5" />} label="المنتجات" />
-          <MobileNavLink href="/admin/categories" icon={<Layers className="w-5 h-5" />} label="الأقسام" />
-          <MobileNavLink href="/admin/orders" icon={<ShoppingBag className="w-5 h-5" />} label="الطلبات" />
-        </div>
       </div>
+
+      {/* Mobile Bottom Navigation - Moved to top level for absolute visibility */}
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-slate-900 border-t-2 border-primary/20 dark:border-slate-800 px-2 py-3 z-[100] flex justify-around items-center shadow-[0_-10px_30px_rgba(0,0,0,0.1)]">
+        <MobileNavLink href="/admin" icon={<LayoutDashboard className="w-6 h-6" />} label="الرئيسية" />
+        <MobileNavLink href="/admin/products" icon={<Package className="w-6 h-6" />} label="المنتجات" />
+        <MobileNavLink href="/admin/categories" icon={<Layers className="w-6 h-6" />} label="الأقسام" />
+        <MobileNavLink href="/admin/orders" icon={<ShoppingBag className="w-6 h-6" />} label="الطلبات" />
+      </nav>
     </div>
   );
 }
