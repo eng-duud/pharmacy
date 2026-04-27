@@ -91,7 +91,7 @@ export default function Footer() {
                 <MapPin className="w-5 h-5" />
               </div>
               <a 
-                href="https://www.google.com/maps/search/?api=1&query=صيدلية+القدس+صنعاء+دار+سلم" 
+                href="https://maps.app.goo.gl/69CLAtYuntC72XWz9?g_st=aw" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-slate-400 font-medium leading-relaxed hover:text-primary transition-colors"
@@ -99,15 +99,29 @@ export default function Footer() {
                 صنعاء - دار سلم - نهاية الجسر باتجاه الحثيلي
               </a>
             </div>
-            <div className="mt-6 rounded-2xl overflow-hidden grayscale contrast-125 opacity-50 hover:opacity-100 transition-opacity h-32 bg-slate-800 flex items-center justify-center">
-               <span className="text-xs text-slate-500 italic">خريطة الموقع قريباً...</span>
-            </div>
+            <a 
+              href="https://maps.app.goo.gl/69CLAtYuntC72XWz9?g_st=aw" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="mt-6 rounded-2xl overflow-hidden relative group h-32 bg-slate-800 border border-slate-700 hover:border-primary/50 transition-all shadow-inner flex flex-col items-center justify-center"
+            >
+               {/* Decorative map-like background */}
+               <div className="absolute inset-0 opacity-20 group-hover:opacity-30 transition-opacity" 
+                    style={{ backgroundImage: 'radial-gradient(circle, #334155 1px, transparent 1px)', backgroundSize: '20px 20px' }}></div>
+               <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent"></div>
+               
+               <div className="relative z-10 flex flex-col items-center">
+                 <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
+                   <MapPin className="w-6 h-6 text-primary" />
+                 </div>
+                 <span className="text-xs text-slate-300 font-bold tracking-wider">فتح الخريطة التفاعلية</span>
+               </div>
+            </a>
           </div>
         </div>
 
         <div className="border-t border-slate-800 pt-10 text-center text-slate-500 text-sm">
           <p>© {new Date().getFullYear()} صيدلية القدس. جميع الحقوق محفوظة.</p>
-          <p className="mt-2 text-slate-600">اليمن - صنعاء - دار سلم - نهاية الجسر باتجاه الحثيلي</p>
         </div>
       </div>
     </footer>
