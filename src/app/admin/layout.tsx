@@ -68,9 +68,17 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         </header>
 
         {/* Page Content */}
-        <main className="flex-1 overflow-y-auto p-6 md:p-10">
+        <main className="flex-1 overflow-y-auto p-6 md:p-10 pb-24 lg:pb-10">
           {children}
         </main>
+
+        {/* Mobile Bottom Navigation */}
+        <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white/90 dark:bg-slate-900/90 backdrop-blur-lg border-t border-slate-200 dark:border-slate-800 px-4 py-2 z-50 flex justify-around items-center shadow-[0_-4px_15px_rgba(0,0,0,0.05)]">
+          <MobileNavLink href="/admin" icon={<LayoutDashboard className="w-5 h-5" />} label="الرئيسية" />
+          <MobileNavLink href="/admin/products" icon={<Package className="w-5 h-5" />} label="المنتجات" />
+          <MobileNavLink href="/admin/categories" icon={<Layers className="w-5 h-5" />} label="الأقسام" />
+          <MobileNavLink href="/admin/orders" icon={<ShoppingBag className="w-5 h-5" />} label="الطلبات" />
+        </div>
       </div>
     </div>
   );
@@ -84,6 +92,15 @@ function SidebarLink({ href, icon, label }: { href: string; icon: React.ReactNod
     >
       <span className="group-hover:scale-110 transition-transform">{icon}</span>
       <span className="text-sm">{label}</span>
+    </Link>
+  );
+}
+
+function MobileNavLink({ href, icon, label }: { href: string; icon: React.ReactNode; label: string }) {
+  return (
+    <Link href={href} className="flex flex-col items-center gap-1 p-2 text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-teal-light transition-colors">
+      {icon}
+      <span className="text-[10px] font-bold">{label}</span>
     </Link>
   );
 }
