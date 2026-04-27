@@ -4,6 +4,8 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import BottomNav from "@/components/BottomNav";
+import { CartProvider } from "@/context/CartContext";
+import CartSidebar from "@/components/CartSidebar";
 
 const tajawal = Tajawal({
   subsets: ["arabic"],
@@ -44,13 +46,16 @@ export default function RootLayout({
         />
       </head>
       <body className={`${tajawal.variable} font-tajawal bg-white dark:bg-slate-950 transition-colors duration-300`}>
-        <Header />
-        {/* pb-24 leaves room for the fixed bottom nav */}
-        <div className="pb-24">
-          {children}
-          <Footer />
-        </div>
-        <BottomNav />
+        <CartProvider>
+          <Header />
+          {/* pb-24 leaves room for the fixed bottom nav */}
+          <div className="pb-24">
+            {children}
+            <Footer />
+          </div>
+          <BottomNav />
+          <CartSidebar />
+        </CartProvider>
       </body>
     </html>
   );

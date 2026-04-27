@@ -2,12 +2,16 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Sun, Moon } from "lucide-react";
+import { Sun, Moon, ShoppingBag } from "lucide-react";
 import { useState, useEffect } from "react";
+import { useCart } from "@/context/CartContext";
 
 export default function Header() {
   const [isDark, setIsDark] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const { cartItems, setIsCartOpen } = useCart();
+  
+  const cartItemsCount = cartItems.reduce((total, item) => total + item.quantity, 0);
 
   useEffect(() => {
     setMounted(true);
@@ -48,20 +52,37 @@ export default function Header() {
           </span>
         </Link>
 
-        {/* Dark Mode Toggle */}
-        <button
-          onClick={() => setIsDark(!isDark)}
-          className="p-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors"
-          aria-label="Toggle Dark Mode"
-        >
-          {!mounted ? (
-            <div className="w-5 h-5" />
-          ) : isDark ? (
-            <Sun className="w-5 h-5 text-yellow-500" />
-          ) : (
-            <Moon className="w-5 h-5" />
-          )}
-        </button>
+        {/* Actions (Dark Mode & Cart) */}
+        <div className="flex items-center gap-2">
+          {/* Cart Toggle */}
+          <button
+            onClick={() => setIsCartOpen(true)}
+            className="relative p-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors"
+            aria-label="Open Cart"
+          >
+            <ShoppingBag className="w-5 h-5" />
+            {mounted && cartItemsCount > 0 && (
+              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full">
+                {cartItemsCount}
+              </span>
+            )}
+          </button>
+
+          {/* Dark Mode Toggle */}
+          <button
+            onClick={() => setIsDark(!isDark)}
+            className="p-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors"
+            aria-label="Toggle Dark Mode"
+          >
+            {!mounted ? (
+              <div className="w-5 h-5" />
+            ) : isDark ? (
+              <Sun className="w-5 h-5 text-yellow-500" />
+            ) : (
+              <Moon className="w-5 h-5" />
+            )}
+          </button>
+        </div>
 
       </div>
     </header>

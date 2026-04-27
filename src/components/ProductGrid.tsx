@@ -3,12 +3,15 @@
 import { Product } from "@/constants";
 import { ShoppingCart, Heart } from "lucide-react";
 import { motion } from "framer-motion";
+import { useCart } from "@/context/CartContext";
 
 interface GridProps {
   products: Product[];
 }
 
 export default function ProductGrid({ products }: GridProps) {
+  const { addToCart } = useCart();
+
   if (products.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-16 text-center">
@@ -54,7 +57,13 @@ export default function ProductGrid({ products }: GridProps) {
 
             {/* Quick Add — desktop hover overlay only */}
             <div className="hidden md:flex absolute inset-0 bg-primary/20 dark:bg-teal/20 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity items-center justify-center gap-3">
-              <button className="bg-white dark:bg-slate-800 p-3 rounded-full text-primary dark:text-teal-light hover:bg-primary dark:hover:bg-teal hover:text-white transition-colors shadow-lg">
+              <button 
+                onClick={(e) => {
+                  e.preventDefault();
+                  addToCart({ id: product.id.toString(), name: product.name, price: product.price, image: product.image });
+                }}
+                className="bg-white dark:bg-slate-800 p-3 rounded-full text-primary dark:text-teal-light hover:bg-primary dark:hover:bg-teal hover:text-white transition-colors shadow-lg"
+              >
                 <ShoppingCart className="w-5 h-5" />
               </button>
               <button className="bg-white dark:bg-slate-800 p-3 rounded-full text-slate-600 dark:text-slate-300 hover:text-red-500 transition-colors shadow-lg">
@@ -80,15 +89,21 @@ export default function ProductGrid({ products }: GridProps) {
               {product.name}
             </h3>
 
+            {/* Price */}
+            <div className="font-bold text-teal dark:text-teal-400 text-sm md:text-base">
+              {product.price} ريال
+            </div>
+
             {/* CTA Button */}
-            <a
-              href="https://wa.me/967770709062"
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                addToCart({ id: product.id.toString(), name: product.name, price: product.price, image: product.image });
+              }}
               className="mt-auto pt-2 w-full bg-primary/10 dark:bg-primary/20 text-primary dark:text-teal-light text-center py-2 rounded-xl text-xs md:text-sm font-bold hover:bg-primary hover:text-white dark:hover:bg-teal dark:hover:text-white transition-all active:scale-95 block"
             >
-              اطلب الآن
-            </a>
+              أضف للسلة
+            </button>
           </div>
         </motion.div>
       ))}
