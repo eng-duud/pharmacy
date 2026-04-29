@@ -1,23 +1,25 @@
-import { writeFile, mkdir } from 'fs/promises';
-import { join } from 'path';
-export async function uploadImage(file: File): Promise<string> {
-  const bytes = await file.arrayBuffer();
-  const buffer = Buffer.from(bytes);
+import { supabase } from './supabase';
 
-  // Create unique filename
+export async function uploadImage(file: File): Promise<string> {
+  // إنشاء اسم فريد للملف
   const extension = file.name.split('.').pop();
   const filename = `${Date.now()}-${Math.random().toString(36).substring(7)}.${extension}`;
-  const uploadDir = join(process.cwd(), 'public', 'uploads');
-  
-  // Ensure directory exists
-  try {
-    await mkdir(uploadDir, { recursive: true });
-  } catch (err) {
-    // Ignore if directory exists
+  const filePath = `uploads/${filename}`;
+
+  // رفع الملف إلى Supabase Storage
+  const { data, error } = await supabase.storage
+    .from('pharmacy') // تأكد من إنشاء Bucket بهذا الاسم في Supabase وجعله Public
+    .upload(filePath, file);
+
+  if (error) {
+    console.error('Error uploading image to Supabase:', error);
+    throw new Error('فشل في رفع الصورة');
   }
 
-  const path = join(uploadDir, filename);
-  await writeFile(path, buffer);
-  
-  return `/uploads/${filename}`;
+  // الحصول على الرابط العام للصورة
+  const { data: { publicUrl } } = supabase.storage
+    .from('pharmacy')
+    .getPublicUrl(filePath);
+
+  return publicUrl;
 }
