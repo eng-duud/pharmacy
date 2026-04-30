@@ -24,42 +24,52 @@ export default function CheckoutPage() {
     e.preventDefault();
     setIsSubmitting(true);
     
-    const res = await createOrder({
-      customerName: formData.name,
-      customerPhone: formData.phone,
-      customerAddress: formData.address,
-      totalAmount: cartTotal,
-      items: cartItems.map(item => ({
-        productId: item.id,
-        productName: item.name,
-        quantity: item.quantity,
-        price: item.price
-      }))
-    });
-    
-    setIsSubmitting(false);
-    
-    if (res.success) {
-      setIsSuccess(true);
-      
-      // Construct WhatsApp Message
-      let message = `مرحباً صيدلية القدس، أود تأكيد طلبي الجديد:\n\n`;
-      message += `👤 الاسم: ${formData.name}\n`;
-      message += `📞 الهاتف: ${formData.phone}\n`;
-      message += `📍 العنوان: ${formData.address}\n\n`;
-      message += `🛍️ تفاصيل الطلب:\n`;
-      cartItems.forEach((item, index) => {
-        message += `${index + 1}. ${item.name} (الكمية: ${item.quantity})\n`;
+    try {
+      const res = await createOrder({
+        customerName: formData.name,
+        customerPhone: formData.phone,
+        customerAddress: formData.address,
+        totalAmount: cartTotal,
+        items: cartItems.map(item => ({
+          productId: String(item.id), // Ensure id is a string for Next.js serialization
+          productName: item.name,
+          quantity: item.quantity,
+          price: item.price
+        }))
       });
+      
+      setIsSubmitting(false);
+      
+      if (res.success) {
+        // Clear cart and show success UI FIRST
+        clearCart();
+        setIsSuccess(true);
+        
+        // Construct WhatsApp Message
+        let message = `مرحباً صيدلية القدس، أود تأكيد طلبي الجديد:\n\n`;
+        message += `👤 الاسم: ${formData.name}\n`;
+        message += `📞 الهاتف: ${formData.phone}\n`;
+        message += `📍 العنوان: ${formData.address}\n\n`;
+        message += `🛍️ تفاصيل الطلب:\n`;
+        cartItems.forEach((item, index) => {
+          message += `${index + 1}. ${item.name} (الكمية: ${item.quantity})\n`;
+        });
 
-      message += `\n⚠️ تنبيه مهم: يُرجى إرسال هذه الرسالة كما هي دون أي تعديل لضمان معالجة طلبك بشكل صحيح وسريع. ✅`;
-      
-      const whatsappUrl = `https://wa.me/967770709062?text=${encodeURIComponent(message)}`;
-      window.open(whatsappUrl, '_blank');
-      
-      clearCart();
-    } else {
-      alert("حدث خطأ أثناء حفظ الطلب. قد تكون المنتجات المضافة تجريبية وليست في قاعدة البيانات الحقيقية.");
+        message += `\n⚠️ تنبيه مهم: يُرجى إرسال هذه الرسالة كما هي دون أي تعديل لضمان معالجة طلبك بشكل صحيح وسريع. ✅`;
+        
+        const whatsappUrl = `https://wa.me/967770709062?text=${encodeURIComponent(message)}`;
+        
+        // Delay WhatsApp redirect slightly to allow React to render success screen and save localStorage
+        setTimeout(() => {
+          window.open(whatsappUrl, '_blank');
+        }, 800);
+      } else {
+        alert("حدث خطأ أثناء حفظ الطلب. قد تكون المنتجات المضافة تجريبية وليست في قاعدة البيانات الحقيقية.");
+      }
+    } catch (error) {
+      console.error(error);
+      setIsSubmitting(false);
+      alert("حدث خطأ في الاتصال بالخادم. يرجى المحاولة مرة أخرى.");
     }
   };
 
