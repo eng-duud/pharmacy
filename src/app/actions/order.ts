@@ -2,6 +2,7 @@
 
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
+import { uploadImage } from "@/lib/upload";
 
 type OrderItemInput = {
   productId: string;
@@ -25,13 +26,13 @@ export async function createOrder(data: {
         totalAmount: data.totalAmount,
         type: "CART",
         items: {
-          create: data.items.map(item => ({
+          create: data.items.map((item) => ({
             productId: item.productId,
             quantity: item.quantity,
-            price: item.price
-          }))
-        }
-      }
+            price: item.price,
+          })),
+        },
+      },
     });
 
     revalidatePath("/admin/orders");
@@ -51,9 +52,8 @@ export async function createPrescriptionOrder(formData: FormData) {
     const notes = formData.get("notes") as string;
     const imageFile = formData.get("image") as File;
 
-    let imageUrl = null;
+    let imageUrl: string | null = null;
     if (imageFile && imageFile.size > 0) {
-      const { uploadImage } = await import("@/lib/upload");
       imageUrl = await uploadImage(imageFile);
     }
 
@@ -61,11 +61,11 @@ export async function createPrescriptionOrder(formData: FormData) {
       data: {
         customerName: name,
         customerPhone: phone,
-        customerAddress: notes, // Store notes in address field for simplicity or use it for specific info
+        customerAddress: notes,
         type: "PRESCRIPTION",
         image: imageUrl,
         totalAmount: 0,
-      }
+      },
     });
 
     revalidatePath("/admin/orders");
@@ -78,3 +78,19 @@ export async function createPrescriptionOrder(formData: FormData) {
   }
 }
 
+export async function updateOrderStatus(id: string, status: string) {
+  try {
+    await prisma.order.update({
+      where: { id },
+      data: { status },
+    });
+
+    revalidatePath("/admin/orders");
+    revalidatePath("/admin");
+
+    return { success: true };
+  } catch (error) {
+    console.error("Failed to update order status:", error);
+    return { success: false, error: "فشل في تحديث الحالة" };
+  }
+}

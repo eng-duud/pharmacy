@@ -1,25 +1,38 @@
-import { supabase } from './supabase';
+/**
+ * Image Upload Utility — Cloudinary
+ * 
+ * مزود رفع الصور: Cloudinary (مجاني حتى 25GB)
+ * الإعداد:
+ *   1. سجّل في cloudinary.com
+ *   2. اذهب إلى Settings > Upload > Upload Presets > Add unsigned preset
+ *   3. أضف المتغيرات في Vercel:
+ *      NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your_cloud_name
+ *      NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET=your_preset_name
+ */
 
 export async function uploadImage(file: File): Promise<string> {
-  // إنشاء اسم فريد للملف
-  const extension = file.name.split('.').pop();
-  const filename = `${Date.now()}-${Math.random().toString(36).substring(7)}.${extension}`;
-  const filePath = `uploads/${filename}`;
+  const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+  const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
 
-  // رفع الملف إلى Supabase Storage
-  const { data, error } = await supabase.storage
-    .from('pharmacy') // تأكد من إنشاء Bucket بهذا الاسم في Supabase وجعله Public
-    .upload(filePath, file);
-
-  if (error) {
-    console.error('Error uploading image to Supabase:', error);
-    throw new Error('فشل في رفع الصورة');
+  if (!cloudName || !uploadPreset) {
+    console.warn('Cloudinary غير مُهيَّأ — سيُستخدم الرابط الافتراضي');
+    return '/products/default.jpg';
   }
 
-  // الحصول على الرابط العام للصورة
-  const { data: { publicUrl } } = supabase.storage
-    .from('pharmacy')
-    .getPublicUrl(filePath);
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('upload_preset', uploadPreset);
+  formData.append('folder', 'pharmacy');
 
-  return publicUrl;
+  const res = await fetch(
+    `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+    { method: 'POST', body: formData }
+  );
+
+  if (!res.ok) {
+    throw new Error('فشل في رفع الصورة إلى Cloudinary');
+  }
+
+  const data = await res.json();
+  return data.secure_url as string;
 }

@@ -4,7 +4,6 @@ import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { uploadImage } from "@/lib/upload";
 
-
 export async function addProduct(formData: FormData) {
   const name = formData.get("name") as string;
   const description = formData.get("description") as string;
@@ -12,7 +11,12 @@ export async function addProduct(formData: FormData) {
   const imageFile = formData.get("image") as File;
   const categoryId = formData.get("categoryId") as string;
   const newCategoryName = formData.get("newCategoryName") as string;
-  
+
+  let imageUrl = "/products/default.jpg";
+  if (imageFile && imageFile.size > 0) {
+    imageUrl = await uploadImage(imageFile);
+  }
+
   if (!name || isNaN(price) || (!categoryId && !newCategoryName)) {
     throw new Error("Missing required fields");
   }
@@ -21,16 +25,10 @@ export async function addProduct(formData: FormData) {
 
   if (newCategoryName) {
     const category = await prisma.category.create({
-      data: { name: newCategoryName }
+      data: { name: newCategoryName },
     });
     finalCategoryId = category.id;
   }
-
-  let imageUrl = "/products/bp-monitor.jpg";
-  if (imageFile && imageFile.size > 0) {
-    imageUrl = await uploadImage(imageFile);
-  }
-
 
   const product = await prisma.product.create({
     data: {
@@ -38,24 +36,24 @@ export async function addProduct(formData: FormData) {
       description,
       price,
       image: imageUrl,
-      categoryId: finalCategoryId
-    }
+      categoryId: finalCategoryId,
+    },
   });
 
   revalidatePath("/admin/products");
   revalidatePath("/products");
-  
+
   return { success: true, product };
 }
 
 export async function deleteProduct(id: string) {
   await prisma.product.delete({
-    where: { id }
+    where: { id },
   });
-  
+
   revalidatePath("/admin/products");
   revalidatePath("/products");
-  
+
   return { success: true };
 }
 
@@ -63,14 +61,14 @@ export async function updateProduct(id: string, formData: FormData) {
   const name = formData.get("name") as string;
   const description = formData.get("description") as string;
   const price = parseFloat(formData.get("price") as string);
-  const imageFile = formData.get("image") as File;
   const categoryId = formData.get("categoryId") as string;
+  const imageFile = formData.get("image") as File;
 
-  const updateData: any = {
+  const updateData: Record<string, unknown> = {
     name,
     description,
     price,
-    categoryId
+    categoryId,
   };
 
   if (imageFile && imageFile.size > 0) {
@@ -79,7 +77,7 @@ export async function updateProduct(id: string, formData: FormData) {
 
   await prisma.product.update({
     where: { id },
-    data: updateData
+    data: updateData,
   });
 
   revalidatePath("/admin/products");
@@ -90,14 +88,13 @@ export async function updateProduct(id: string, formData: FormData) {
 
 export async function getCategories() {
   return await prisma.category.findMany({
-    orderBy: { name: 'asc' }
+    orderBy: { name: "asc" },
   });
 }
 
 export async function deleteCategory(id: string) {
-  // Check if category has products
   const productsCount = await prisma.product.count({
-    where: { categoryId: id }
+    where: { categoryId: id },
   });
 
   if (productsCount > 0) {
@@ -105,10 +102,9 @@ export async function deleteCategory(id: string) {
   }
 
   await prisma.category.delete({
-    where: { id }
+    where: { id },
   });
 
   revalidatePath("/admin/categories");
   return { success: true };
 }
-
