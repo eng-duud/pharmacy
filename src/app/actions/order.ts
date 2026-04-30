@@ -5,7 +5,8 @@ import { revalidatePath } from "next/cache";
 import { uploadImage } from "@/lib/upload";
 
 type OrderItemInput = {
-  productId: string;
+  productId?: string;
+  productName: string;
   quantity: number;
   price: number;
 };
@@ -26,11 +27,16 @@ export async function createOrder(data: {
         totalAmount: data.totalAmount,
         type: "CART",
         items: {
-          create: data.items.map((item) => ({
-            productId: item.productId,
-            quantity: item.quantity,
-            price: item.price,
-          })),
+          create: data.items.map((item) => {
+            // Sanitize productId: if it's a dummy product (e.g., id "1", "2"), set to null to avoid FK errors
+            const isValidId = typeof item.productId === 'string' && item.productId.length > 10;
+            return {
+              productId: isValidId ? item.productId : null,
+              productName: item.productName,
+              quantity: item.quantity,
+              price: item.price,
+            };
+          }),
         },
       },
     });

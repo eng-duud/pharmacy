@@ -62,7 +62,7 @@ export default async function AdminOrdersPage() {
                       <ul className="list-disc list-inside text-xs text-slate-500 dark:text-slate-400">
                         {order.items.map(item => (
                           <li key={item.id}>
-                            {item.product ? item.product.name : "منتج مخصص"} (×{item.quantity})
+                            {item.product ? item.product.name : item.productName} (×{item.quantity})
                           </li>
                         ))}
                       </ul>

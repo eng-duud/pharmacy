@@ -31,6 +31,7 @@ export default function CheckoutPage() {
       totalAmount: cartTotal,
       items: cartItems.map(item => ({
         productId: item.id,
+        productName: item.name,
         quantity: item.quantity,
         price: item.price
       }))
@@ -50,7 +51,8 @@ export default function CheckoutPage() {
       cartItems.forEach((item, index) => {
         message += `${index + 1}. ${item.name} (الكمية: ${item.quantity})\n`;
       });
-      message += `\n💰 الإجمالي النهائي: ${cartTotal} ريال\n`;
+
+      message += `\n⚠️ تنبيه مهم: يُرجى إرسال هذه الرسالة كما هي دون أي تعديل لضمان معالجة طلبك بشكل صحيح وسريع. ✅`;
       
       const whatsappUrl = `https://wa.me/967770709062?text=${encodeURIComponent(message)}`;
       window.open(whatsappUrl, '_blank');
