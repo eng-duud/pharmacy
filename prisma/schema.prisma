@@ -1,7 +1,5 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
+// Prisma Schema - Optimized for Neon PostgreSQL
+// https://neon.tech | https://pris.ly/d/prisma-schema
 
 generator client {
   provider = "prisma-client-js"
@@ -15,10 +13,12 @@ datasource db {
 
 model Category {
   id        String    @id @default(cuid())
-  name      String
+  name      String    @unique
   products  Product[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+
+  @@map("categories")
 }
 
 model Product {
@@ -32,6 +32,9 @@ model Product {
   orderItems  OrderItem[]
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
+
+  @@index([categoryId])
+  @@map("products")
 }
 
 model Order {
@@ -40,23 +43,31 @@ model Order {
   customerPhone   String
   customerAddress String?
   totalAmount     Float       @default(0)
-  image           String?     // For prescriptions
-  type            String      @default("CART") // CART or PRESCRIPTION
+  image           String?
+  type            String      @default("CART")   // CART or PRESCRIPTION
   status          String      @default("PENDING") // PENDING, COMPLETED, CANCELLED
   items           OrderItem[]
   createdAt       DateTime    @default(now())
   updatedAt       DateTime    @updatedAt
-}
 
+  @@index([status])
+  @@index([type])
+  @@index([createdAt])
+  @@map("orders")
+}
 
 model OrderItem {
   id        String   @id @default(cuid())
   orderId   String
   order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
   productId String
-  product   Product  @relation(fields: [productId], references: [id])
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Restrict)
   quantity  Int
   price     Float
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([orderId])
+  @@index([productId])
+  @@map("order_items")
 }
