@@ -4,6 +4,15 @@ import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { uploadImage } from "@/lib/upload";
 
+function generateOrderId() {
+  const date = new Date();
+  const yy = date.getFullYear().toString().slice(-2);
+  const mm = (date.getMonth() + 1).toString().padStart(2, '0');
+  const dd = date.getDate().toString().padStart(2, '0');
+  const random = Math.floor(1000 + Math.random() * 9000).toString();
+  return `${yy}${mm}${dd}-${random}`;
+}
+
 type OrderItemInput = {
   productId?: string;
   productName: string;
@@ -21,6 +30,7 @@ export async function createOrder(data: {
   try {
     const order = await prisma.order.create({
       data: {
+        id: generateOrderId(),
         customerName: data.customerName,
         customerPhone: data.customerPhone,
         customerAddress: data.customerAddress,
@@ -65,6 +75,7 @@ export async function createPrescriptionOrder(formData: FormData) {
 
     const order = await prisma.order.create({
       data: {
+        id: generateOrderId(),
         customerName: name,
         customerPhone: phone,
         customerAddress: notes,
