@@ -246,7 +246,7 @@ export default function ProductFilter({
             <div className="flex items-center justify-between px-6 pb-4 border-b border-slate-100 dark:border-slate-800" dir="rtl">
               <h2 className="text-xl font-black text-slate-900 dark:text-white flex items-center gap-2">
                 <Filter className="w-5 h-5 text-primary" />
-                تصفية المنتجات
+                تصفية الأصناف
               </h2>
               <button
                 onClick={() => setIsOpen(false)}

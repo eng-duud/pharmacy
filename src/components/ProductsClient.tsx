@@ -37,11 +37,10 @@ export default function ProductsClient({
       <section className="bg-slate-50 dark:bg-slate-900/50 border-b border-slate-100 dark:border-slate-800 py-8 md:py-12 transition-colors duration-300">
         <div className="container mx-auto px-4 text-right" dir="rtl">
           <h1 className="text-2xl md:text-4xl font-black text-slate-900 dark:text-white mb-2 md:mb-4">
-            منتجاتنا
+            أدويتنا ومستلزماتنا
           </h1>
           <p className="text-slate-600 dark:text-slate-400 text-sm md:text-lg max-w-2xl">
-            استعرض مجموعتنا الواسعة من الأدوية، مستحضرات التجميل، ومنتجات
-            العناية الصحية.
+            استعرض مجموعتنا الواسعة من الأدوية والمستلزمات الطبية المضمونة.
           </p>
         </div>
       </section>
@@ -68,7 +67,7 @@ export default function ProductsClient({
               <div className="relative flex-1">
                 <input
                   type="text"
-                  placeholder="ابحث في المنتجات..."
+                  placeholder="ابحث عن دواء أو صنف..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl py-2.5 md:py-3 pr-10 pl-4 text-sm md:text-base shadow-sm focus:ring-2 focus:ring-primary/20 dark:focus:ring-teal/20 outline-none dark:text-white transition text-right"

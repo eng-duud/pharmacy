@@ -36,7 +36,7 @@ export default function Hero() {
                   href="/products" 
                   className="bg-primary text-white px-8 py-4 rounded-2xl font-bold text-lg shadow-xl shadow-primary/20 hover:bg-primary-dark transition-all transform hover:-translate-y-1"
                 >
-                  تسوق الآن
+                  اطلب الآن
                 </Link>
                 <Link 
                   href="/upload-prescription" 
@@ -57,7 +57,7 @@ export default function Hero() {
                   <div className="w-10 h-10 bg-white dark:bg-slate-900 shadow-md rounded-lg flex items-center justify-center text-teal dark:text-teal-light">
                     <ShieldCheck className="w-5 h-5" />
                   </div>
-                  <span className="font-semibold text-sm">منتجات أصلية 100%</span>
+                  <span className="font-semibold text-sm">أدوية مضمونة 100%</span>
                 </div>
                 <div className="flex items-center gap-3 justify-center lg:justify-start text-slate-600 dark:text-slate-400">
                   <div className="w-10 h-10 bg-white dark:bg-slate-900 shadow-md rounded-lg flex items-center justify-center text-teal dark:text-teal-light">

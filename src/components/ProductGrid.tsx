@@ -20,7 +20,7 @@ export default function ProductGrid({ products }: GridProps) {
           <ShoppingCart className="w-8 h-8 md:w-10 md:h-10 text-slate-300 dark:text-slate-600" />
         </div>
         <h3 className="text-lg md:text-xl font-bold text-slate-900 dark:text-white mb-2">
-          عذراً، لم نجد أي منتجات
+          عذراً، لم نجد أي أصناف
         </h3>
         <p className="text-slate-500 dark:text-slate-400 text-sm md:text-base">
           حاول تغيير خيارات البحث أو التصفية

@@ -20,7 +20,7 @@ export default function CartSidebar() {
         <div className="p-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
           <h2 className="text-xl font-bold flex items-center gap-2 dark:text-white">
             <ShoppingBag className="w-5 h-5" />
-            سلة المشتريات
+            سلة الطلبات
           </h2>
           <button 
             onClick={() => setIsCartOpen(false)}
@@ -39,7 +39,7 @@ export default function CartSidebar() {
                 onClick={() => setIsCartOpen(false)}
                 className="mt-4 text-primary font-medium"
               >
-                تصفح المنتجات
+                تصفح الأدوية
               </button>
             </div>
           ) : (

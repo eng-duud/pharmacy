@@ -43,7 +43,7 @@ export default function Footer() {
             </h3>
             <ul className="space-y-3 md:space-y-4 text-slate-400 text-sm md:text-base">
               <li><Link href="/" className="hover:text-white transition-colors">الرئيسية</Link></li>
-              <li><Link href="/products" className="hover:text-white transition-colors">تصفح المنتجات</Link></li>
+              <li><Link href="/products" className="hover:text-white transition-colors">تصفح الأدوية والمستلزمات</Link></li>
               <li><Link href="/upload-prescription" className="hover:text-white transition-colors">إرسال وصفة طبية</Link></li>
               <li><Link href="/contact" className="hover:text-white transition-colors">تواصل معنا</Link></li>
             </ul>

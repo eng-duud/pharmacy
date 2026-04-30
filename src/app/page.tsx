@@ -20,7 +20,7 @@ export default function Home() {
             </div>
             <div>
               <h3 className="text-lg font-black text-slate-900 dark:text-white mb-1">
-                تصفح المنتجات
+                تصفح الأصناف
               </h3>
               <p className="text-slate-500 dark:text-slate-400 text-sm">
                 أجهزة طبية، فيتامينات، عناية وأكثر
@@ -92,7 +92,7 @@ export default function Home() {
               href="/products"
               className="bg-white text-primary px-8 py-4 rounded-2xl font-bold text-base md:text-lg hover:shadow-2xl transition-all"
             >
-              تصفح المنتجات
+              تصفح الأصناف
             </Link>
             <a
               href="https://wa.me/967770709062"

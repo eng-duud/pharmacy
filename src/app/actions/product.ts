@@ -98,7 +98,7 @@ export async function deleteCategory(id: string) {
   });
 
   if (productsCount > 0) {
-    throw new Error("لا يمكن حذف القسم لأنه يحتوي على منتجات");
+    throw new Error("لا يمكن حذف القسم لأنه يحتوي على أصناف");
   }
 
   await prisma.category.delete({

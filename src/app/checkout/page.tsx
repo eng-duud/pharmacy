@@ -32,7 +32,7 @@ export default function CheckoutPage() {
         totalAmount: Number(cartTotal) || 0,
         items: cartItems.map(item => ({
           productId: String(item.id), // Ensure id is a string for Next.js serialization
-          productName: item.name || "منتج",
+          productName: item.name || "صنف",
           quantity: Number(item.quantity) || 1,
           price: Number(item.price) || 0
         }))
@@ -100,12 +100,12 @@ export default function CheckoutPage() {
       <div className="container mx-auto px-4 py-20 flex flex-col items-center justify-center text-center">
         <ShoppingBag className="w-24 h-24 text-slate-300 dark:text-slate-700 mb-6" />
         <h1 className="text-3xl font-bold text-slate-800 dark:text-white mb-4">السلة فارغة</h1>
-        <p className="text-slate-600 dark:text-slate-400 mb-8">لا يوجد أي منتجات في سلتك حالياً لإتمام الطلب.</p>
+        <p className="text-slate-600 dark:text-slate-400 mb-8">لا يوجد أي أصناف في سلتك حالياً لإتمام الطلب.</p>
         <Link 
           href="/products"
           className="px-8 py-3 bg-primary hover:bg-primary-dark text-white rounded-xl font-bold transition-colors"
         >
-          تصفح المنتجات
+          تصفح الأصناف
         </Link>
       </div>
     );
@@ -115,7 +115,7 @@ export default function CheckoutPage() {
     <div className="container mx-auto px-4 py-8">
       <div className="flex items-center gap-2 mb-8">
         <Link href="/products" className="text-slate-500 hover:text-primary transition-colors flex items-center gap-1">
-          <ArrowRight className="w-4 h-4" /> العودة للتسوق
+          <ArrowRight className="w-4 h-4" /> العودة للتصفح
         </Link>
       </div>
 

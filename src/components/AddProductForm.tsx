@@ -37,7 +37,7 @@ export default function AddProductForm({ categories }: { categories: Category[] 
       setPreview(null);
       setShowNewCategory(false);
     } catch (error) {
-      alert("فشل في إضافة المنتج");
+      alert("فشل في إضافة الصنف");
     } finally {
       setLoading(false);
     }
@@ -48,14 +48,14 @@ export default function AddProductForm({ categories }: { categories: Category[] 
       <div className="flex items-center justify-between mb-2">
         <h2 className="text-2xl font-black text-slate-800 dark:text-white flex items-center gap-2">
           <Plus className="w-6 h-6 text-primary" />
-          إضافة منتج جديد
+          إضافة صنف جديد
         </h2>
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-bold mb-2 dark:text-slate-300">اسم المنتج</label>
+            <label className="block text-sm font-bold mb-2 dark:text-slate-300">اسم الصنف</label>
             <input type="text" name="name" required placeholder="مثال: فيتامين سي" className="w-full p-3 bg-slate-50 dark:bg-slate-800 border-none rounded-2xl focus:ring-2 focus:ring-primary dark:text-white" />
           </div>
           <input type="hidden" name="price" value="0" />
@@ -100,7 +100,7 @@ export default function AddProductForm({ categories }: { categories: Category[] 
         </div>
 
         <div>
-          <label className="block text-sm font-bold mb-2 dark:text-slate-300">صورة المنتج</label>
+          <label className="block text-sm font-bold mb-2 dark:text-slate-300">صورة الصنف</label>
           <div className="relative group">
             <input 
               type="file" 
@@ -129,7 +129,7 @@ export default function AddProductForm({ categories }: { categories: Category[] 
       
       <div>
         <label className="block text-sm font-bold mb-2 dark:text-slate-300">الوصف</label>
-        <textarea name="description" rows={3} placeholder="اكتب تفاصيل المنتج هنا..." className="w-full p-4 bg-slate-50 dark:bg-slate-800 border-none rounded-2xl focus:ring-2 focus:ring-primary dark:text-white"></textarea>
+        <textarea name="description" rows={3} placeholder="اكتب تفاصيل الصنف هنا..." className="w-full p-4 bg-slate-50 dark:bg-slate-800 border-none rounded-2xl focus:ring-2 focus:ring-primary dark:text-white"></textarea>
       </div>
 
       <button 
@@ -142,7 +142,7 @@ export default function AddProductForm({ categories }: { categories: Category[] 
         ) : (
           <>
             <Plus className="w-6 h-6" />
-            إضافة المنتج للمتجر
+            إضافة الصنف للصيدلية
           </>
         )}
       </button>

@@ -45,7 +45,7 @@ export default function ProductsList({
               : "text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200"
           }`}
         >
-          جميع المنتجات
+          جميع الأصناف
         </button>
         {categories.map((category) => (
           <button
@@ -67,7 +67,7 @@ export default function ProductsList({
           <table className="w-full text-right border-collapse">
             <thead className="bg-slate-50/50 dark:bg-slate-800/30 text-slate-500 dark:text-slate-400">
               <tr>
-                <th className="p-5 font-bold text-sm">المنتج</th>
+                <th className="p-5 font-bold text-sm">الصنف</th>
                 <th className="p-5 font-bold text-sm">التصنيف</th>
 
                 <th className="p-5 font-bold text-sm text-center">الإجراءات</th>
@@ -103,7 +103,7 @@ export default function ProductsList({
                         <Edit3 className="w-5 h-5" />
                       </button>
                       <form action={async () => {
-                        if (confirm("هل أنت متأكد من حذف هذا المنتج؟")) {
+                        if (confirm("هل أنت متأكد من حذف هذا الصنف؟")) {
                           await deleteProduct(product.id);
                         }
                       }}>
@@ -120,7 +120,7 @@ export default function ProductsList({
                   <td colSpan={4} className="p-20 text-center">
                     <div className="flex flex-col items-center gap-3 grayscale opacity-50">
                       <Search className="w-12 h-12 text-slate-300" />
-                      <p className="text-slate-500 font-bold text-lg">لم يتم العثور على منتجات</p>
+                      <p className="text-slate-500 font-bold text-lg">لم يتم العثور على أصناف</p>
                     </div>
                   </td>
                 </tr>

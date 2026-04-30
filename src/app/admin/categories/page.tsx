@@ -27,7 +27,7 @@ export default async function AdminCategoriesPage() {
     <div className="space-y-10 animate-in fade-in duration-500 text-right" dir="rtl">
       <div>
         <h1 className="text-4xl font-black text-slate-800 dark:text-white mb-2">إدارة الأقسام</h1>
-        <p className="text-slate-500 dark:text-slate-400">إضافة وحذف أقسام المنتجات</p>
+        <p className="text-slate-500 dark:text-slate-400">إضافة وحذف أقسام الصيدلية</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -67,7 +67,7 @@ export default async function AdminCategoriesPage() {
                 <thead className="bg-slate-50/50 dark:bg-slate-800/30 text-slate-500 dark:text-slate-400">
                   <tr>
                     <th className="p-5 font-bold text-sm">اسم القسم</th>
-                    <th className="p-5 font-bold text-sm">عدد المنتجات</th>
+                    <th className="p-5 font-bold text-sm">عدد الأصناف</th>
                     <th className="p-5 font-bold text-sm text-center">الإجراءات</th>
                   </tr>
                 </thead>
@@ -84,7 +84,7 @@ export default async function AdminCategoriesPage() {
                       </td>
                       <td className="p-5">
                         <span className="px-3 py-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-full text-xs font-bold">
-                          {category._count.products} منتج
+                          {category._count.products} صنف
                         </span>
                       </td>
                       <td className="p-5">
@@ -101,7 +101,7 @@ export default async function AdminCategoriesPage() {
                               type="submit" 
                               disabled={category._count.products > 0}
                               className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all disabled:opacity-30 disabled:cursor-not-allowed" 
-                              title={category._count.products > 0 ? "لا يمكن حذف قسم يحتوي على منتجات" : "حذف"}
+                              title={category._count.products > 0 ? "لا يمكن حذف قسم يحتوي على أصناف" : "حذف"}
                             >
                               <Trash2 className="w-5 h-5" />
                             </button>

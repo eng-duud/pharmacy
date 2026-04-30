@@ -12,7 +12,7 @@ const navItems = [
   },
   {
     href: "/products",
-    label: "المنتجات",
+    label: "الأصناف",
     icon: ShoppingBag,
   },
   {
