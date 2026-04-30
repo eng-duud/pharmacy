@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { BRANDS } from "@/constants";
 import { ChevronLeft, Filter, X, SlidersHorizontal } from "lucide-react";
@@ -12,7 +12,8 @@ interface FilterProps {
   setSelectedBrand: (brand: string) => void;
 }
 
-// â”€â”€ Icon mapping for each category â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€âconst CATEGORY_META: Record<string, { emoji: string; bg: string; darkBg: string }> = {
+// Icon mapping for each category
+const CATEGORY_META: Record<string, { emoji: string; bg: string; darkBg: string }> = {
   "ط£ط¬ظ‡ط²ط© ظ‚ظٹط§ط³ ط§ظ„ط¶ط؛ط·":           { emoji: "ًں©؛", bg: "bg-red-50",      darkBg: "dark:bg-red-900/20"      }, // ط³ظ…ط§ط¹ط© ط·ط¨ظٹط©
   "ط£ط¬ظ‡ط²ط© ظ‚ظٹط§ط³ ط§ظ„ط³ظƒط±":           { emoji: "ًں©¸", bg: "bg-rose-50",     darkBg: "dark:bg-rose-900/20"     }, // ط¥ط¨ط±ط© - طھط¹ط¨ظٹط± ط¹ظ† ظ…ط±ط¶ظ‰ ط§ظ„ط³ظƒط±
   "ط¹ظ„ط§ط¬ط§طھ ط§ظ„ط³ظƒط±ظٹ":               { emoji: "ًں’‰", bg: "bg-blue-50",     darkBg: "dark:bg-blue-900/20"     }, // ط­ظ‚ظ†ط© - ط¥ظ†ط³ظˆظ„ظٹظ†
@@ -37,11 +38,6 @@ interface FilterProps {
   "ط´ط±ظƒط© ط¯ظٹط±ظ…ط§ (Derma)":          { emoji: "ًںŒ¸", bg: "bg-fuchsia-50",  darkBg: "dark:bg-fuchsia-900/20"  }, // ط²ظ‡ط±ط© - ط¹ظ†ط§ظٹط© ط¨ط´ط±ط©
   "ظ…ظ†طھط¬ط§طھ ط¥ط²ط§ظ„ط© ط§ظ„ط´ط¹ط± ط§ظ„ظ†ط³ط§ط¦ظٹط©":  { emoji: "ًںھ’", bg: "bg-pink-50",     darkBg: "dark:bg-pink-900/20"     }, // ط´ظ…ط¹ط© - ط¥ط²ط§ظ„ط© ط¨ط§ظ„ط´ظ…ط¹
   "ط§ظ„ط¹ظ†ط§ظٹط© ط¨ط§ظ„ط¬ظ‡ط§ط² ط§ظ„ظ‡ط¶ظ…ظٹ":      { emoji: "ًں¦ ", bg: "bg-teal-50",     darkBg: "dark:bg-teal-900/20"     }, // ط¨ظƒطھظٹط±ظٹط§ ظ†ط§ظپط¹ط© - ط¨ط±ظˆط¨ظٹظˆطھظٹظƒ
-};
-erma)":       { emoji: "ًں’§", bg: "bg-sky-50",      darkBg: "dark:bg-sky-900/20"      },
-  "ط´ط±ظƒط© ط¯ظٹط±ظ…ط§ (Derma)":            { emoji: "ًں§¬", bg: "bg-fuchsia-50",  darkBg: "dark:bg-fuchsia-900/20"  },
-  "ظ…ظ†طھط¬ط§طھ ط¥ط²ط§ظ„ط© ط§ظ„ط´ط¹ط± ط§ظ„ظ†ط³ط§ط¦ظٹط©":    { emoji: "ًںھ’", bg: "bg-pink-50",     darkBg: "dark:bg-pink-900/20"     },
-  "ط§ظ„ط¹ظ†ط§ظٹط© ط¨ط§ظ„ط¬ظ‡ط§ط² ط§ظ„ظ‡ط¶ظ…ظٹ":        { emoji: "ًں¦ ", bg: "bg-teal-50",     darkBg: "dark:bg-teal-900/20"     },
 };
 
 const DEFAULT_META = { emoji: "ًں’ٹ", bg: "bg-slate-50", darkBg: "dark:bg-slate-800" };
