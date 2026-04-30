@@ -26,8 +26,8 @@ export default async function AdminCategoriesPage() {
   return (
     <div className="space-y-10 animate-in fade-in duration-500 text-right" dir="rtl">
       <div>
-        <h1 className="text-4xl font-black text-slate-800 dark:text-white mb-2">إدارة الأقسام</h1>
-        <p className="text-slate-500 dark:text-slate-400">إضافة وحذف أقسام الصيدلية</p>
+        <h1 className="text-4xl font-black text-slate-800 dark:text-white mb-2">إدارة الأصناف</h1>
+        <p className="text-slate-500 dark:text-slate-400">إضافة وحذف الأصناف وتصنيفات الأدوية</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -36,11 +36,11 @@ export default async function AdminCategoriesPage() {
           <form action={addCategory} className="bg-white dark:bg-slate-900 p-8 rounded-3xl shadow-xl border border-slate-100 dark:border-slate-800 sticky top-10">
             <h2 className="text-xl font-bold mb-6 flex items-center gap-2 dark:text-white">
               <FolderPlus className="w-5 h-5 text-primary" />
-              إضافة قسم جديد
+              إضافة صنف جديد
             </h2>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-bold mb-2 dark:text-slate-300">اسم القسم</label>
+                <label className="block text-sm font-bold mb-2 dark:text-slate-300">اسم الصنف</label>
                 <input 
                   type="text" 
                   name="name" 
@@ -53,7 +53,7 @@ export default async function AdminCategoriesPage() {
                 type="submit" 
                 className="w-full py-3 bg-primary text-white rounded-2xl font-bold hover:bg-primary-dark transition-all shadow-lg shadow-primary/20"
               >
-                حفظ القسم
+                حفظ الصنف
               </button>
             </div>
           </form>
@@ -66,8 +66,8 @@ export default async function AdminCategoriesPage() {
               <table className="w-full text-right">
                 <thead className="bg-slate-50/50 dark:bg-slate-800/30 text-slate-500 dark:text-slate-400">
                   <tr>
-                    <th className="p-5 font-bold text-sm">اسم القسم</th>
-                    <th className="p-5 font-bold text-sm">عدد الأصناف</th>
+                    <th className="p-5 font-bold text-sm">اسم الصنف</th>
+                    <th className="p-5 font-bold text-sm">عدد الأدوية</th>
                     <th className="p-5 font-bold text-sm text-center">الإجراءات</th>
                   </tr>
                 </thead>
@@ -84,7 +84,7 @@ export default async function AdminCategoriesPage() {
                       </td>
                       <td className="p-5">
                         <span className="px-3 py-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-full text-xs font-bold">
-                          {category._count.products} صنف
+                          {category._count.products} دواء
                         </span>
                       </td>
                       <td className="p-5">
@@ -101,7 +101,7 @@ export default async function AdminCategoriesPage() {
                               type="submit" 
                               disabled={category._count.products > 0}
                               className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all disabled:opacity-30 disabled:cursor-not-allowed" 
-                              title={category._count.products > 0 ? "لا يمكن حذف قسم يحتوي على أصناف" : "حذف"}
+                              title={category._count.products > 0 ? "لا يمكن حذف صنف يحتوي على أدوية" : "حذف"}
                             >
                               <Trash2 className="w-5 h-5" />
                             </button>

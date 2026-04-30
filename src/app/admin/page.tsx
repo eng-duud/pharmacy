@@ -21,7 +21,7 @@ export default async function AdminDashboard() {
               <Package className="w-7 h-7" />
             </div>
             <div>
-              <p className="text-sm text-slate-500 dark:text-slate-400 group-hover:text-teal transition-colors">إجمالي الأصناف</p>
+              <p className="text-sm text-slate-500 dark:text-slate-400 group-hover:text-teal transition-colors">إجمالي الأدوية</p>
               <p className="text-2xl font-bold text-slate-800 dark:text-white">{productsCount}</p>
             </div>
           </div>
@@ -47,7 +47,7 @@ export default async function AdminDashboard() {
               <Users className="w-7 h-7" />
             </div>
             <div>
-              <p className="text-sm text-slate-500 dark:text-slate-400 group-hover:text-orange-500 transition-colors">الأقسام</p>
+              <p className="text-sm text-slate-500 dark:text-slate-400 group-hover:text-orange-500 transition-colors">إجمالي الأصناف</p>
               <p className="text-2xl font-bold text-slate-800 dark:text-white">{categoriesCount}</p>
             </div>
           </div>
