@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 
+// منع Next.js من تخزين هذه الصفحة مؤقتاً (مهم جداً لـ Vercel)
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   try {
     const categories = [
