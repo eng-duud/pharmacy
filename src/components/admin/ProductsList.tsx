@@ -29,9 +29,39 @@ export default function ProductsList({
   categories: Category[]; 
 }) {
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+  const [filter, setFilter] = useState("ALL");
+
+  const filteredProducts = initialProducts.filter(p => filter === "ALL" ? true : p.categoryId === filter);
 
   return (
-    <>
+    <div className="space-y-6">
+      {/* Filter Banner */}
+      <div className="flex items-center gap-2 bg-slate-100 dark:bg-slate-800 p-2 rounded-2xl overflow-x-auto scrollbar-none border border-slate-200 dark:border-slate-700">
+        <button
+          onClick={() => setFilter("ALL")}
+          className={`px-5 py-2.5 rounded-xl text-sm font-bold whitespace-nowrap transition-all duration-200 ${
+            filter === "ALL"
+              ? "bg-white dark:bg-slate-600 text-primary shadow-sm"
+              : "text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200"
+          }`}
+        >
+          جميع المنتجات
+        </button>
+        {categories.map((category) => (
+          <button
+            key={category.id}
+            onClick={() => setFilter(category.id)}
+            className={`px-5 py-2.5 rounded-xl text-sm font-bold whitespace-nowrap transition-all duration-200 ${
+              filter === category.id
+                ? "bg-white dark:bg-slate-600 text-teal shadow-sm"
+                : "text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200"
+            }`}
+          >
+            {category.name}
+          </button>
+        ))}
+      </div>
+
       <div className="bg-white dark:bg-slate-900 rounded-3xl shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-800 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-right border-collapse">
@@ -44,7 +74,7 @@ export default function ProductsList({
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
-              {initialProducts.map(product => (
+              {filteredProducts.map(product => (
                 <tr key={product.id} className="group hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition-all">
                   <td className="p-5">
                     <div className="flex items-center gap-4">
@@ -85,7 +115,7 @@ export default function ProductsList({
                   </td>
                 </tr>
               ))}
-              {initialProducts.length === 0 && (
+              {filteredProducts.length === 0 && (
                 <tr>
                   <td colSpan={4} className="p-20 text-center">
                     <div className="flex flex-col items-center gap-3 grayscale opacity-50">
@@ -107,6 +137,6 @@ export default function ProductsList({
           onClose={() => setEditingProduct(null)} 
         />
       )}
-    </>
+    </div>
   );
 }
