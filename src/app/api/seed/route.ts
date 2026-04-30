@@ -3,12 +3,6 @@ import prisma from '@/lib/prisma';
 
 export async function GET() {
   try {
-    // Clear existing data safely
-    await prisma.orderItem.deleteMany();
-    await prisma.order.deleteMany();
-    await prisma.product.deleteMany();
-    await prisma.category.deleteMany();
-
     const categories = [
       'الأدوية الموصوفة',
       'مسكنات الألم',
@@ -21,13 +15,26 @@ export async function GET() {
       'العناية الشخصية'
     ];
 
+    let addedCount = 0;
+
     for (const name of categories) {
-      await prisma.category.create({
-        data: { name }
+      // التحقق مما إذا كان القسم موجوداً بالفعل لتجنب التكرار
+      const existing = await prisma.category.findFirst({
+        where: { name }
       });
+
+      if (!existing) {
+        await prisma.category.create({
+          data: { name }
+        });
+        addedCount++;
+      }
     }
 
-    return NextResponse.json({ message: 'تم إعادة تهيئة قاعدة البيانات بنجاح وإضافة الأقسام الأساسية.' });
+    return NextResponse.json({ 
+      message: 'تمت العملية بأمان.', 
+      added_categories: addedCount 
+    });
   } catch (error) {
     console.error('Seeding error:', error);
     return NextResponse.json({ error: 'حدث خطأ أثناء تحديث قاعدة البيانات' }, { status: 500 });

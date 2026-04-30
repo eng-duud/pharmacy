@@ -3,14 +3,7 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log('Clearing database...');
-  await prisma.orderItem.deleteMany();
-  await prisma.order.deleteMany();
-  await prisma.product.deleteMany();
-  await prisma.category.deleteMany();
-  console.log('Database cleared successfully.');
-
-  console.log('Adding default categories...');
+  console.log('Adding default categories safely...');
   const categories = [
     'الأدوية الموصوفة',
     'مسكنات الألم',
@@ -23,12 +16,21 @@ async function main() {
     'العناية الشخصية'
   ];
 
+  let addedCount = 0;
+
   for (const name of categories) {
-    await prisma.category.create({
-      data: { name }
+    const existing = await prisma.category.findFirst({
+      where: { name }
     });
+
+    if (!existing) {
+      await prisma.category.create({
+        data: { name }
+      });
+      addedCount++;
+    }
   }
-  console.log('Categories added successfully.');
+  console.log(`Successfully added ${addedCount} missing categories.`);
 }
 
 main()
