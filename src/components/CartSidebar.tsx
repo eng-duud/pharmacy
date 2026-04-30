@@ -81,15 +81,13 @@ export default function CartSidebar() {
 
         {cartItems.length > 0 && (
           <div className="p-4 border-t border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50">
-            <button 
-              onClick={() => {
-                const message = `أهلاً صيدلية القدس، أود طلب المنتجات التالية:\n${cartItems.map(item => `- ${item.name} (الكمية: ${item.quantity})`).join('\n')}`;
-                window.open(`https://wa.me/967770709062?text=${encodeURIComponent(message)}`, '_blank');
-              }}
+            <Link 
+              href="/checkout"
+              onClick={() => setIsCartOpen(false)}
               className="w-full py-3 bg-primary hover:bg-primary-dark text-white rounded-xl font-bold flex items-center justify-center transition-colors gap-2"
             >
-              اطلب عبر واتساب
-            </button>
+              إتمام الطلب
+            </Link>
           </div>
         )}
       </div>
