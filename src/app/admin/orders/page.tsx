@@ -26,6 +26,7 @@ export default async function AdminOrdersPage() {
           <table className="w-full text-right text-sm">
             <thead className="bg-slate-50 dark:bg-slate-800/50 text-slate-500 dark:text-slate-400">
               <tr>
+                <th className="p-4 font-medium">رقم الطلب</th>
                 <th className="p-4 font-medium">النوع</th>
                 <th className="p-4 font-medium">العميل</th>
                 <th className="p-4 font-medium">الهاتف</th>
@@ -39,6 +40,9 @@ export default async function AdminOrdersPage() {
             <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
               {orders.map(order => (
                 <tr key={order.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                  <td className="p-4 font-mono text-[10px] text-slate-500 dark:text-slate-400 max-w-[100px] truncate" title={order.id}>
+                    {order.id}
+                  </td>
                   <td className="p-4">
                     <span className={`px-2 py-1 rounded text-[10px] font-bold ${
                       order.type === 'PRESCRIPTION' ? 'bg-purple-100 text-purple-700' : 'bg-blue-100 text-blue-700'
@@ -68,7 +72,7 @@ export default async function AdminOrdersPage() {
                       </ul>
                     )}
                   </td>
-                  <td className="p-4 font-bold text-primary">{order.totalAmount} ريال</td>
+                  <td className="p-4 font-bold text-primary">{order.totalAmount > 0 ? `${order.totalAmount} ريال` : 'غير محدد'}</td>
                   <td className="p-4 text-slate-500">
                     {formatDistanceToNow(new Date(order.createdAt), { addSuffix: true, locale: ar })}
                   </td>
@@ -85,7 +89,7 @@ export default async function AdminOrdersPage() {
               ))}
               {orders.length === 0 && (
                 <tr>
-                  <td colSpan={8} className="p-8 text-center text-slate-500">لا يوجد طلبات حالياً.</td>
+                  <td colSpan={9} className="p-8 text-center text-slate-500">لا يوجد طلبات حالياً.</td>
                 </tr>
               )}
             </tbody>
