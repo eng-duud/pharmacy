@@ -19,10 +19,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           
           <div className="space-y-1">
             <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4 px-4">القائمة الرئيسية</p>
-            <SidebarLink href="/admin" icon={<LayoutDashboard className="w-5 h-5" />} label="نظرة عامة" />
-            <SidebarLink href="/admin/products" icon={<Package className="w-5 h-5" />} label="الأدوية" />
-            <SidebarLink href="/admin/categories" icon={<Layers className="w-5 h-5" />} label="الأصناف" />
-            <SidebarLink href="/admin/orders" icon={<ShoppingBag className="w-5 h-5" />} label="الطلبات" />
+            <SidebarLink href="/hq-admin" icon={<LayoutDashboard className="w-5 h-5" />} label="نظرة عامة" />
+            <SidebarLink href="/hq-admin/products" icon={<Package className="w-5 h-5" />} label="الأدوية" />
+            <SidebarLink href="/hq-admin/categories" icon={<Layers className="w-5 h-5" />} label="الأصناف" />
+            <SidebarLink href="/hq-admin/orders" icon={<ShoppingBag className="w-5 h-5" />} label="الطلبات" />
           </div>
         </div>
 
@@ -75,10 +75,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
       {/* Mobile Bottom Navigation - Moved to top level for absolute visibility */}
       <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-slate-900 border-t-2 border-primary/20 dark:border-slate-800 px-2 py-3 z-[100] flex justify-around items-center shadow-[0_-10px_30px_rgba(0,0,0,0.1)]">
-        <MobileNavLink href="/admin" icon={<LayoutDashboard className="w-6 h-6" />} label="الرئيسية" />
-        <MobileNavLink href="/admin/products" icon={<Package className="w-6 h-6" />} label="الأدوية" />
-        <MobileNavLink href="/admin/categories" icon={<Layers className="w-6 h-6" />} label="الأصناف" />
-        <MobileNavLink href="/admin/orders" icon={<ShoppingBag className="w-6 h-6" />} label="الطلبات" />
+        <MobileNavLink href="/hq-admin" icon={<LayoutDashboard className="w-6 h-6" />} label="الرئيسية" />
+        <MobileNavLink href="/hq-admin/products" icon={<Package className="w-6 h-6" />} label="الأدوية" />
+        <MobileNavLink href="/hq-admin/categories" icon={<Layers className="w-6 h-6" />} label="الأصناف" />
+        <MobileNavLink href="/hq-admin/orders" icon={<ShoppingBag className="w-6 h-6" />} label="الطلبات" />
       </nav>
     </div>
   );

@@ -40,7 +40,7 @@ export async function addProduct(formData: FormData) {
     },
   });
 
-  revalidatePath("/admin/products");
+  revalidatePath("/hq-admin/products");
   revalidatePath("/products");
 
   return { success: true, product };
@@ -51,7 +51,7 @@ export async function deleteProduct(id: string) {
     where: { id },
   });
 
-  revalidatePath("/admin/products");
+  revalidatePath("/hq-admin/products");
   revalidatePath("/products");
 
   return { success: true };
@@ -80,7 +80,7 @@ export async function updateProduct(id: string, formData: FormData) {
     data: updateData,
   });
 
-  revalidatePath("/admin/products");
+  revalidatePath("/hq-admin/products");
   revalidatePath("/products");
 
   return { success: true };
@@ -105,6 +105,6 @@ export async function deleteCategory(id: string) {
     where: { id },
   });
 
-  revalidatePath("/admin/categories");
+  revalidatePath("/hq-admin/categories");
   return { success: true };
 }

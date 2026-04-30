@@ -41,8 +41,8 @@ export async function createOrder(data: {
       },
     });
 
-    revalidatePath("/admin/orders");
-    revalidatePath("/admin");
+    revalidatePath("/hq-admin/orders");
+    revalidatePath("/hq-admin");
 
     return { success: true, orderId: order.id };
   } catch (error) {
@@ -74,8 +74,8 @@ export async function createPrescriptionOrder(formData: FormData) {
       },
     });
 
-    revalidatePath("/admin/orders");
-    revalidatePath("/admin");
+    revalidatePath("/hq-admin/orders");
+    revalidatePath("/hq-admin");
 
     return { success: true, orderId: order.id, imageUrl };
   } catch (error) {
@@ -91,8 +91,8 @@ export async function updateOrderStatus(id: string, status: string) {
       data: { status },
     });
 
-    revalidatePath("/admin/orders");
-    revalidatePath("/admin");
+    revalidatePath("/hq-admin/orders");
+    revalidatePath("/hq-admin");
 
     return { success: true };
   } catch (error) {
