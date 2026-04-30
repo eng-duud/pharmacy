@@ -96,7 +96,7 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 className="text-slate-400 font-medium leading-tight text-[11px] md:text-base hover:text-primary transition-colors"
               >
-                صنعاء - دار سلم - نهاية الجسر
+                صنعاء - دار سلم - بعد نهاية الجسر باتجاه الحثيلي
               </a>
             </div>
             <a 
