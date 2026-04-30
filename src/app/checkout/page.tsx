@@ -29,24 +29,26 @@ export default function CheckoutPage() {
         customerName: formData.name,
         customerPhone: formData.phone,
         customerAddress: formData.address,
-        totalAmount: cartTotal,
+        totalAmount: Number(cartTotal) || 0,
         items: cartItems.map(item => ({
           productId: String(item.id), // Ensure id is a string for Next.js serialization
-          productName: item.name,
-          quantity: item.quantity,
-          price: item.price
+          productName: item.name || "منتج",
+          quantity: Number(item.quantity) || 1,
+          price: Number(item.price) || 0
         }))
       });
       
       setIsSubmitting(false);
       
       if (res.success) {
-        // Clear cart and show success UI FIRST
+        // Clear cart explicitly here to ensure localStorage is updated before WhatsApp opens
+        localStorage.removeItem("pharmacy_cart");
         clearCart();
         setIsSuccess(true);
         
         // Construct WhatsApp Message
         let message = `مرحباً صيدلية القدس، أود تأكيد طلبي الجديد:\n\n`;
+        message += `رقم الطلب: ${res.orderId}\n`;
         message += `👤 الاسم: ${formData.name}\n`;
         message += `📞 الهاتف: ${formData.phone}\n`;
         message += `📍 العنوان: ${formData.address}\n\n`;
@@ -55,16 +57,16 @@ export default function CheckoutPage() {
           message += `${index + 1}. ${item.name} (الكمية: ${item.quantity})\n`;
         });
 
-        message += `\n⚠️ تنبيه مهم: يُرجى إرسال هذه الرسالة كما هي دون أي تعديل لضمان معالجة طلبك بشكل صحيح وسريع. ✅`;
+        message += `\n⚠️ تنبيه مهم: يُرجى إرسال هذه الرسالة كما هي لضمان معالجة طلبك.\nرقم الطلب المرجعي: ${res.orderId} ✅`;
         
         const whatsappUrl = `https://wa.me/967770709062?text=${encodeURIComponent(message)}`;
         
-        // Delay WhatsApp redirect slightly to allow React to render success screen and save localStorage
+        // Delay WhatsApp redirect slightly to allow React to render success screen
         setTimeout(() => {
-          window.open(whatsappUrl, '_blank');
+          window.location.href = whatsappUrl;
         }, 800);
       } else {
-        alert("حدث خطأ أثناء حفظ الطلب. قد تكون المنتجات المضافة تجريبية وليست في قاعدة البيانات الحقيقية.");
+        alert("حدث خطأ أثناء حفظ الطلب في قاعدة البيانات: " + (res.error || "خطأ غير معروف"));
       }
     } catch (error) {
       console.error(error);
