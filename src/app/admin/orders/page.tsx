@@ -40,8 +40,14 @@ export default async function AdminOrdersPage() {
             <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
               {orders.map(order => (
                 <tr key={order.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-                  <td className="p-4 font-mono text-[10px] text-slate-500 dark:text-slate-400 max-w-[100px] truncate" title={order.id}>
-                    {order.id}
+                  <td className="p-4 align-middle">
+                    <code 
+                      className="block bg-slate-100 dark:bg-slate-800 px-2 py-1.5 rounded text-[11px] font-mono text-slate-700 dark:text-slate-300 max-w-[120px] overflow-x-auto whitespace-nowrap select-all custom-scrollbar cursor-text" 
+                      dir="ltr"
+                      title="انقر للتحديد والنسخ"
+                    >
+                      {order.id}
+                    </code>
                   </td>
                   <td className="p-4">
                     <span className={`px-2 py-1 rounded text-[10px] font-bold ${
