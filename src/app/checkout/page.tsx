@@ -169,7 +169,7 @@ export default function CheckoutPage() {
                 {isSubmitting ? (
                   <span className="animate-pulse">جاري تأكيد الطلب...</span>
                 ) : (
-                  <>تأكيد الطلب ({cartTotal} ريال)</>
+                  <>تأكيد الطلب</>
                 )}
               </button>
             </form>
@@ -189,15 +189,15 @@ export default function CheckoutPage() {
                   <div className="flex-1">
                     <h3 className="font-semibold text-sm line-clamp-2 dark:text-slate-200">{item.name}</h3>
                     <div className="text-slate-500 text-sm mt-1">الكمية: {item.quantity}</div>
-                    <div className="font-bold text-teal dark:text-teal-400 mt-1">{item.price * item.quantity} ريال</div>
                   </div>
                 </div>
               ))}
             </div>
             
+            
             <div className="pt-4 border-t border-slate-200 dark:border-slate-700 flex justify-between items-center text-lg font-bold">
-              <span className="text-slate-700 dark:text-slate-300">الإجمالي النهائي:</span>
-              <span className="text-primary dark:text-primary-light">{cartTotal} ريال</span>
+              <span className="text-slate-700 dark:text-slate-300">السعر الإجمالي:</span>
+              <span className="text-primary dark:text-primary-light text-sm">يتم التحديد عند التواصل</span>
             </div>
           </div>
         </div>
