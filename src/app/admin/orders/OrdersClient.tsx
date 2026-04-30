@@ -34,18 +34,25 @@ export default function OrdersClient({ initialOrders }: { initialOrders: any[] }
       <div className="p-6 border-b border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <h2 className="text-xl font-bold dark:text-white">الطلبات الحديثة ({filteredOrders.length})</h2>
         
-        <div className="flex items-center gap-2">
-          <Filter className="w-5 h-5 text-slate-400" />
-          <select 
-            value={filter}
-            onChange={(e) => setFilter(e.target.value)}
-            className="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-primary dark:text-white"
-          >
-            <option value="ALL">جميع الحالات</option>
-            <option value="PENDING">قيد الانتظار</option>
-            <option value="COMPLETED">مكتمل</option>
-            <option value="CANCELLED">ملغي</option>
-          </select>
+        <div className="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 p-1 rounded-xl overflow-x-auto scrollbar-none">
+          {[
+            { id: "ALL", label: "جميع الطلبات" },
+            { id: "PENDING", label: "قيد الانتظار" },
+            { id: "COMPLETED", label: "مكتمل" },
+            { id: "CANCELLED", label: "ملغي" }
+          ].map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setFilter(tab.id)}
+              className={`px-4 py-2.5 rounded-lg text-xs font-bold whitespace-nowrap transition-all duration-200 ${
+                filter === tab.id
+                  ? "bg-white dark:bg-slate-600 text-primary shadow-sm"
+                  : "text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200"
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
         </div>
       </div>
       <div className="overflow-x-auto">
