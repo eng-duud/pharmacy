@@ -4,13 +4,25 @@ import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { uploadImage } from "@/lib/upload";
 
-function generateOrderId() {
+async function generateOrderId(): Promise<string> {
   const date = new Date();
-  const yy = date.getFullYear().toString().slice(-2);
-  const mm = (date.getMonth() + 1).toString().padStart(2, '0');
   const dd = date.getDate().toString().padStart(2, '0');
-  const random = Math.floor(1000 + Math.random() * 9000).toString();
-  return `${yy}${mm}${dd}-${random}`;
+  const mm = (date.getMonth() + 1).toString().padStart(2, '0');
+  const yy = date.getFullYear().toString().slice(-2);
+  const prefix = `ORD-${dd}${mm}${yy}`;
+
+  // Count orders created today to get sequential number
+  const startOfDay = new Date(date);
+  startOfDay.setHours(0, 0, 0, 0);
+  const endOfDay = new Date(date);
+  endOfDay.setHours(23, 59, 59, 999);
+
+  const todayCount = await prisma.order.count({
+    where: { createdAt: { gte: startOfDay, lte: endOfDay } },
+  });
+
+  const seq = (todayCount + 1).toString().padStart(4, '0');
+  return `${prefix}-${seq}`;
 }
 
 type OrderItemInput = {
@@ -28,9 +40,10 @@ export async function createOrder(data: {
   items: OrderItemInput[];
 }) {
   try {
+    const orderId = await generateOrderId();
     const order = await prisma.order.create({
       data: {
-        id: generateOrderId(),
+        id: orderId,
         customerName: data.customerName,
         customerPhone: data.customerPhone,
         customerAddress: data.customerAddress,
@@ -73,9 +86,10 @@ export async function createPrescriptionOrder(formData: FormData) {
       imageUrl = await uploadImage(imageFile);
     }
 
+    const orderId = await generateOrderId();
     const order = await prisma.order.create({
       data: {
-        id: generateOrderId(),
+        id: orderId,
         customerName: name,
         customerPhone: phone,
         customerAddress: notes,

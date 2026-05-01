@@ -4,6 +4,27 @@ import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { uploadImage } from "@/lib/upload";
 
+async function generateProductId(): Promise<string> {
+  const date = new Date();
+  const dd = date.getDate().toString().padStart(2, '0');
+  const mm = (date.getMonth() + 1).toString().padStart(2, '0');
+  const yy = date.getFullYear().toString().slice(-2);
+  const prefix = `PRD-${dd}${mm}${yy}`;
+
+  // Count products created today to get sequential number
+  const startOfDay = new Date(date);
+  startOfDay.setHours(0, 0, 0, 0);
+  const endOfDay = new Date(date);
+  endOfDay.setHours(23, 59, 59, 999);
+
+  const todayCount = await prisma.product.count({
+    where: { createdAt: { gte: startOfDay, lte: endOfDay } },
+  });
+
+  const seq = (todayCount + 1).toString().padStart(4, '0');
+  return `${prefix}-${seq}`;
+}
+
 export async function addProduct(formData: FormData) {
   const name = formData.get("name") as string;
   const description = formData.get("description") as string;
@@ -30,8 +51,10 @@ export async function addProduct(formData: FormData) {
     finalCategoryId = category.id;
   }
 
+  const productId = await generateProductId();
   const product = await prisma.product.create({
     data: {
+      id: productId,
       name,
       description,
       price,
