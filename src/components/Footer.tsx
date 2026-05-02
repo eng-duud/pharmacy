@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Phone, MapPin, Instagram, Facebook, Twitter, Mail } from "lucide-react";
+import { Phone, MapPin, Facebook, Mail, MessageCircle } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -23,14 +23,33 @@ export default function Footer() {
               شريككم في الصحة والعافية في قلب صنعاء بأعلى المعايير.
             </p>
             <div className="flex gap-3 md:gap-4">
-              <a href="https://www.facebook.com/share/1E1m9XYrMs/" target="_blank" rel="noopener noreferrer" className="w-9 h-9 md:w-10 md:h-10 bg-slate-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+              {/* Facebook */}
+              <a
+                href="https://www.facebook.com/share/1E1m9XYrMs/"
+                target="_blank"
+                rel="noopener noreferrer"
+                title="صفحتنا على فيسبوك"
+                className="w-9 h-9 md:w-10 md:h-10 bg-slate-800 rounded-full flex items-center justify-center hover:bg-[#1877F2] transition-colors"
+              >
                 <Facebook className="w-4 h-4 md:w-5 md:h-5" />
               </a>
-              <a href="#" className="w-9 h-9 md:w-10 md:h-10 bg-slate-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
-                <Instagram className="w-4 h-4 md:w-5 md:h-5" />
+              {/* Phone Call */}
+              <a
+                href="tel:770709062"
+                title="اتصل بنا"
+                className="w-9 h-9 md:w-10 md:h-10 bg-slate-800 rounded-full flex items-center justify-center hover:bg-emerald-600 transition-colors"
+              >
+                <Phone className="w-4 h-4 md:w-5 md:h-5" />
               </a>
-              <a href="#" className="w-9 h-9 md:w-10 md:h-10 bg-slate-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
-                <Twitter className="w-4 h-4 md:w-5 md:h-5" />
+              {/* WhatsApp */}
+              <a
+                href="https://wa.me/967770709062"
+                target="_blank"
+                rel="noopener noreferrer"
+                title="تواصل عبر واتساب"
+                className="w-9 h-9 md:w-10 md:h-10 bg-slate-800 rounded-full flex items-center justify-center hover:bg-[#25D366] transition-colors"
+              >
+                <MessageCircle className="w-4 h-4 md:w-5 md:h-5" />
               </a>
             </div>
           </div>
