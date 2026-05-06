@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Package, ShoppingBag, LayoutDashboard, Settings, Layers, Users, Bell, LogOut, Search } from "lucide-react";
+import LogoutButton from "@/components/admin/LogoutButton";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -27,10 +28,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         </div>
 
         <div className="absolute bottom-0 w-full p-6 border-t border-slate-100 dark:border-slate-800">
-          <Link href="/" className="flex items-center gap-3 w-full px-4 py-3 rounded-xl text-slate-600 hover:text-red-500 hover:bg-red-50 dark:text-slate-400 dark:hover:text-red-400 dark:hover:bg-red-500/10 transition-all font-bold">
-            <LogOut className="w-5 h-5" />
-            <span>تسجيل الخروج (العودة للمتجر)</span>
-          </Link>
+          <LogoutButton />
         </div>
       </aside>
 
