@@ -15,7 +15,7 @@ export default async function AdminDashboard() {
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Products Card */}
-        <Link href="/hq-admin/products" className="block group">
+        <Link href="/adcpanforpharmacyquds/products" className="block group">
           <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 flex items-center gap-4 hover:shadow-md hover:border-teal/30 dark:hover:border-teal/50 transition-all duration-300">
             <div className="w-14 h-14 bg-teal/10 text-teal rounded-xl flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
               <Package className="w-7 h-7" />
@@ -28,7 +28,7 @@ export default async function AdminDashboard() {
         </Link>
 
         {/* Orders Card */}
-        <Link href="/hq-admin/orders" className="block group">
+        <Link href="/adcpanforpharmacyquds/orders" className="block group">
           <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 flex items-center gap-4 hover:shadow-md hover:border-primary/30 dark:hover:border-primary/50 transition-all duration-300">
             <div className="w-14 h-14 bg-primary/10 text-primary rounded-xl flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
               <ShoppingBag className="w-7 h-7" />
@@ -41,7 +41,7 @@ export default async function AdminDashboard() {
         </Link>
 
         {/* Categories Card */}
-        <Link href="/hq-admin/categories" className="block group">
+        <Link href="/adcpanforpharmacyquds/categories" className="block group">
           <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 flex items-center gap-4 hover:shadow-md hover:border-orange-500/30 dark:hover:border-orange-500/50 transition-all duration-300">
             <div className="w-14 h-14 bg-orange-500/10 text-orange-500 rounded-xl flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
               <Users className="w-7 h-7" />

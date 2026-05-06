@@ -65,7 +65,7 @@ export async function addProduct(formData: FormData) {
     },
   });
 
-  revalidatePath("/hq-admin/products");
+  revalidatePath("/adcpanforpharmacyquds/products");
   revalidatePath("/products");
 
   return { success: true, product };
@@ -77,7 +77,7 @@ export async function deleteProduct(id: string) {
       where: { id },
     });
 
-    revalidatePath("/hq-admin/products");
+    revalidatePath("/adcpanforpharmacyquds/products");
     revalidatePath("/products");
 
     return { success: true };
@@ -115,7 +115,7 @@ export async function updateProduct(id: string, formData: FormData) {
     data: updateData,
   });
 
-  revalidatePath("/hq-admin/products");
+  revalidatePath("/adcpanforpharmacyquds/products");
   revalidatePath("/products");
 
   return { success: true };
@@ -144,7 +144,7 @@ export async function deleteCategory(id: string) {
       where: { id },
     });
 
-    revalidatePath("/hq-admin/categories");
+    revalidatePath("/adcpanforpharmacyquds/categories");
     return { success: true };
   } catch (error) {
     console.error("Delete category error:", error);
