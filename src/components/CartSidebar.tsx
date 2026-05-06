@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function CartSidebar() {
-  const { isCartOpen, setIsCartOpen, cartItems, removeFromCart, updateQuantity, cartTotal } = useCart();
+  const { isCartOpen, setIsCartOpen, cartItems, removeFromCart, updateQuantity, cartTotal, clearCart } = useCart();
 
   if (!isCartOpen) return null;
 
@@ -22,12 +22,27 @@ export default function CartSidebar() {
             <ShoppingBag className="w-5 h-5" />
             سلة الطلبات
           </h2>
-          <button 
-            onClick={() => setIsCartOpen(false)}
-            className="p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full"
-          >
-            <X className="w-5 h-5" />
-          </button>
+          <div className="flex items-center gap-2">
+            {cartItems.length > 0 && (
+              <button 
+                onClick={() => {
+                  if(confirm("هل أنت متأكد من إفراغ السلة؟")) {
+                    clearCart();
+                  }
+                }}
+                className="flex items-center gap-1 px-2 py-1 text-xs font-bold text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-lg transition-all"
+              >
+                <Trash2 className="w-4 h-4" />
+                إفراغ السلة
+              </button>
+            )}
+            <button 
+              onClick={() => setIsCartOpen(false)}
+              className="p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
         </div>
 
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
