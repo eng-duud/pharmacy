@@ -70,6 +70,11 @@ export default function ProductsClient({
                   placeholder="ابحث عن دواء أو صنف..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.currentTarget.blur();
+                    }
+                  }}
                   className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl py-2.5 md:py-3 pr-10 pl-4 text-sm md:text-base shadow-sm focus:ring-2 focus:ring-primary/20 dark:focus:ring-teal/20 outline-none dark:text-white transition text-right"
                   dir="rtl"
                 />
