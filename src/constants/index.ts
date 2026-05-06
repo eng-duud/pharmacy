@@ -13,5 +13,6 @@ export interface Product {
   description?: string;
   image: string;
   isAvailable?: boolean;
+  isNew?: boolean;
 }
 

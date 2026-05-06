@@ -14,6 +14,7 @@ export default function AddProductForm({ categories }: { categories: Category[] 
   const [loading, setLoading] = useState(false);
   const [showNewCategory, setShowNewCategory] = useState(false);
   const [preview, setPreview] = useState<string | null>(null);
+  const [isNew, setIsNew] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,11 +32,13 @@ export default function AddProductForm({ categories }: { categories: Category[] 
     e.preventDefault();
     setLoading(true);
     const formData = new FormData(e.currentTarget);
+    formData.set("isNew", isNew.toString());
     try {
       await addProduct(formData);
       formRef.current?.reset();
       setPreview(null);
       setShowNewCategory(false);
+      setIsNew(false);
     } catch (error) {
       alert("فشل في إضافة الدواء");
     } finally {
@@ -50,6 +53,23 @@ export default function AddProductForm({ categories }: { categories: Category[] 
           <Plus className="w-6 h-6 text-primary" />
           إضافة دواء جديد
         </h2>
+        
+        <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-800 p-1.5 rounded-2xl border border-slate-100 dark:border-slate-700">
+          <button
+            type="button"
+            onClick={() => setIsNew(true)}
+            className={`px-4 py-2 rounded-xl text-xs font-black transition-all ${isNew ? 'bg-teal text-white shadow-lg shadow-teal/20' : 'text-slate-400'}`}
+          >
+            جديد
+          </button>
+          <button
+            type="button"
+            onClick={() => setIsNew(false)}
+            className={`px-4 py-2 rounded-xl text-xs font-black transition-all ${!isNew ? 'bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300' : 'text-slate-400'}`}
+          >
+            عادي
+          </button>
+        </div>
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

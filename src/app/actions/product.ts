@@ -32,6 +32,7 @@ export async function addProduct(formData: FormData) {
   const imageFile = formData.get("image") as File;
   const categoryId = formData.get("categoryId") as string;
   const newCategoryName = formData.get("newCategoryName") as string;
+  const isNew = formData.get("isNew") === "true";
 
   let imageUrl = "/products/default.jpg";
   if (imageFile && imageFile.size > 0) {
@@ -60,6 +61,7 @@ export async function addProduct(formData: FormData) {
       price,
       image: imageUrl,
       categoryId: finalCategoryId,
+      isNew,
     },
   });
 
@@ -94,12 +96,14 @@ export async function updateProduct(id: string, formData: FormData) {
   const price = parseFloat(formData.get("price") as string);
   const categoryId = formData.get("categoryId") as string;
   const imageFile = formData.get("image") as File;
+  const isNew = formData.get("isNew") === "true";
 
   const updateData: Record<string, unknown> = {
     name,
     description,
     price,
     categoryId,
+    isNew,
   };
 
   if (imageFile && imageFile.size > 0) {

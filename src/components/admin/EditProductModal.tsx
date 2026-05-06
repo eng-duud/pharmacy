@@ -17,6 +17,7 @@ type Product = {
   price: number;
   image: string | null;
   categoryId: string;
+  isNew: boolean;
 };
 
 export default function EditProductModal({ 
@@ -30,6 +31,7 @@ export default function EditProductModal({
 }) {
   const [loading, setLoading] = useState(false);
   const [preview, setPreview] = useState<string | null>(product.image);
+  const [isNew, setIsNew] = useState(product.isNew);
   const formRef = useRef<HTMLFormElement>(null);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,6 +49,7 @@ export default function EditProductModal({
     e.preventDefault();
     setLoading(true);
     const formData = new FormData(e.currentTarget);
+    formData.set("isNew", isNew.toString());
     try {
       await updateProduct(product.id, formData);
       onClose();
@@ -61,7 +64,25 @@ export default function EditProductModal({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300">
       <div className="bg-white dark:bg-slate-900 w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden border border-slate-100 dark:border-slate-800 animate-in zoom-in-95 duration-300">
         <div className="p-6 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-slate-50/50 dark:bg-slate-800/50">
-          <h2 className="text-xl font-black text-slate-800 dark:text-white">تعديل الدواء</h2>
+          <div className="flex items-center gap-4">
+            <h2 className="text-xl font-black text-slate-800 dark:text-white">تعديل الدواء</h2>
+            <div className="flex items-center gap-1 bg-white dark:bg-slate-900 p-1 rounded-xl border border-slate-100 dark:border-slate-800">
+              <button
+                type="button"
+                onClick={() => setIsNew(true)}
+                className={`px-3 py-1.5 rounded-lg text-[10px] font-black transition-all ${isNew ? 'bg-teal text-white shadow-md shadow-teal/20' : 'text-slate-400'}`}
+              >
+                جديد
+              </button>
+              <button
+                type="button"
+                onClick={() => setIsNew(false)}
+                className={`px-3 py-1.5 rounded-lg text-[10px] font-black transition-all ${!isNew ? 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300' : 'text-slate-400'}`}
+              >
+                عادي
+              </button>
+            </div>
+          </div>
           <button onClick={onClose} className="p-2 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-xl transition-all">
             <X className="w-5 h-5 text-slate-500" />
           </button>

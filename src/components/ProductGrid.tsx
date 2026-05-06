@@ -48,9 +48,11 @@ export default function ProductGrid({ products }: GridProps) {
               className="group bg-white dark:bg-slate-900 rounded-2xl md:rounded-3xl p-3 md:p-4 shadow-sm border border-slate-100 dark:border-slate-800 hover:shadow-xl hover:shadow-primary/10 hover:-translate-y-1 transition-all cursor-pointer relative overflow-hidden flex flex-col"
             >
               {/* Badge */}
-              <div className="absolute top-2 right-2 md:top-4 md:right-4 z-10 bg-teal text-white text-[9px] md:text-[10px] font-bold px-1.5 md:px-2 py-0.5 md:py-1 rounded-md">
-                جديد
-              </div>
+              {product.isNew && (
+                <div className="absolute top-2 right-2 md:top-4 md:right-4 z-10 bg-teal text-white text-[9px] md:text-[10px] font-bold px-1.5 md:px-2 py-0.5 md:py-1 rounded-md">
+                  جديد
+                </div>
+              )}
 
               {/* Wishlist button */}
               <button 

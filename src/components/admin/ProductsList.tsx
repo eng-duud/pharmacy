@@ -18,6 +18,7 @@ type Product = {
   price: number;
   image: string | null;
   categoryId: string;
+  isNew: boolean;
   category: Category;
 };
 
@@ -82,7 +83,12 @@ export default function ProductsList({
                         <Image src={product.image || "/placeholder.png"} alt={product.name} fill className="object-cover group-hover:scale-110 transition-transform duration-500" />
                       </div>
                       <div>
-                        <p className="font-bold text-slate-800 dark:text-white group-hover:text-primary transition-colors">{product.name}</p>
+                        <div className="flex items-center gap-2">
+                          <p className="font-bold text-slate-800 dark:text-white group-hover:text-primary transition-colors">{product.name}</p>
+                          {product.isNew && (
+                            <span className="px-1.5 py-0.5 bg-teal text-white text-[8px] font-black rounded uppercase">جديد</span>
+                          )}
+                        </div>
                         <p className="text-xs text-slate-400 mt-1 line-clamp-1 max-w-[200px]">{product.description || "لا يوجد وصف"}</p>
                       </div>
                     </div>
