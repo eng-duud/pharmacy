@@ -104,7 +104,10 @@ export default function ProductsList({
                       </button>
                       <form action={async () => {
                         if (confirm("هل أنت متأكد من حذف هذا الدواء؟")) {
-                          await deleteProduct(product.id);
+                          const result = await deleteProduct(product.id);
+                          if (result && !result.success) {
+                            alert(result.error);
+                          }
                         }
                       }}>
                         <button type="submit" className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all" title="حذف">

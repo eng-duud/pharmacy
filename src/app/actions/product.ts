@@ -70,14 +70,31 @@ export async function addProduct(formData: FormData) {
 }
 
 export async function deleteProduct(id: string) {
-  await prisma.product.delete({
-    where: { id },
-  });
+  try {
+    await prisma.product.delete({
+      where: { id },
+    });
 
-  revalidatePath("/hq-admin/products");
-  revalidatePath("/products");
+    revalidatePath("/hq-admin/products");
+    revalidatePath("/products");
 
-  return { success: true };
+    return { success: true };
+  } catch (error: any) {
+    console.error("Delete product error:", error);
+    
+    // Check if it's a foreign key constraint error (Prisma P2003)
+    if (error.code === 'P2003') {
+      return { 
+        success: false, 
+        error: "لا يمكن حذف هذا الدواء لأنه موجود في سجلات الطلبات السابقة. يمكنك تعديل حالة توفره بدلاً من حذفه." 
+      };
+    }
+
+    return { 
+      success: false, 
+      error: "حدث خطأ غير متوقع أثناء حذف الدواء" 
+    };
+  }
 }
 
 export async function updateProduct(id: string, formData: FormData) {
@@ -116,18 +133,29 @@ export async function getCategories() {
 }
 
 export async function deleteCategory(id: string) {
-  const productsCount = await prisma.product.count({
-    where: { categoryId: id },
-  });
+  try {
+    const productsCount = await prisma.product.count({
+      where: { categoryId: id },
+    });
 
-  if (productsCount > 0) {
-    throw new Error("لا يمكن حذف الصنف لأنه يحتوي على أدوية");
+    if (productsCount > 0) {
+      return { 
+        success: false, 
+        error: "لا يمكن حذف الصنف لأنه يحتوي على أدوية. قم بحذف الأدوية أو نقلها أولاً." 
+      };
+    }
+
+    await prisma.category.delete({
+      where: { id },
+    });
+
+    revalidatePath("/hq-admin/categories");
+    return { success: true };
+  } catch (error) {
+    console.error("Delete category error:", error);
+    return { 
+      success: false, 
+      error: "حدث خطأ أثناء حذف الصنف" 
+    };
   }
-
-  await prisma.category.delete({
-    where: { id },
-  });
-
-  revalidatePath("/hq-admin/categories");
-  return { success: true };
 }
