@@ -81,18 +81,9 @@ export async function deleteProduct(id: string) {
     return { success: true };
   } catch (error: any) {
     console.error("Delete product error:", error);
-    
-    // Check if it's a foreign key constraint error (Prisma P2003)
-    if (error.code === 'P2003') {
-      return { 
-        success: false, 
-        error: "لا يمكن حذف هذا الدواء لأنه موجود في سجلات الطلبات السابقة. يمكنك تعديل حالة توفره بدلاً من حذفه." 
-      };
-    }
-
     return { 
       success: false, 
-      error: "حدث خطأ غير متوقع أثناء حذف الدواء" 
+      error: "حدث خطأ أثناء حذف الدواء من قاعدة البيانات" 
     };
   }
 }
