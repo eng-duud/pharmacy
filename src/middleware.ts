@@ -13,16 +13,16 @@ export function middleware(request: NextRequest) {
   }
 
   // Handle the secret admin route
-  if (url.pathname.startsWith('/hq-admin')) {
+  if (url.pathname.startsWith('/adcpanforpharmacyquds')) {
     const isAuth = request.cookies.get('admin_auth')?.value === 'secret_token';
 
     if (!isAuth) {
-      url.pathname = '/hq-login';
+      url.pathname = '/adcpanforpharmacyquds-login';
       return NextResponse.redirect(url);
     }
 
     // Rewrite to the real /admin component
-    const newPath = url.pathname.replace('/hq-admin', '/admin');
+    const newPath = url.pathname.replace('/adcpanforpharmacyquds', '/admin');
     const response = NextResponse.rewrite(new URL(newPath, request.url));
     response.headers.set('x-internal-rewrite', '1');
     return response;
@@ -32,5 +32,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/admin/:path*', '/hq-admin/:path*'],
+  matcher: ['/admin/:path*', '/adcpanforpharmacyquds/:path*'],
 };

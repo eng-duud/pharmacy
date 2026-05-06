@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Lock, ShieldAlert } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-export default function HQLoginPage() {
+export default function ADCPanLoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -24,7 +24,7 @@ export default function HQLoginPage() {
       const data = await res.json();
       
       if (res.ok) {
-        window.location.href = "/hq-admin";
+        window.location.href = "/adcpanforpharmacyquds";
       } else {
         setError(data.error);
       }
